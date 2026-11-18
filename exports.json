@@ -1,6 +1,6 @@
 {
   "$comment": "Written by tools/export.py: the browser the pictures were drawn with, and the bytes of each picture and of what it was drawn from, the brand files included. Do not edit; run the exporter.",
-  "chromium": "153.0.8010.12",
+  "chromium": "159.0.8154.6",
   "files": {
     "png/youtube/avatar.png": {
       "sha256": "f52dc43d8279b4222b87913499244a2f6b84fd8c41a2ed8feb7b0a2d48711a4e",

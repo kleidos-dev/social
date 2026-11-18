@@ -7,5 +7,5 @@
 #   python3 -m venv .venv
 #   .venv/bin/pip install -r requirements.txt
 #   .venv/bin/python -m playwright install chromium
-# Python 3.14 (.python-version).
+# Python 3.15 (.python-version).
 -r brand/requirements.txt
