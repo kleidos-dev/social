@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: MIT
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # The brand repository comes with it: the mark, the lockup, the tokens,
+      # the fonts and the code that draws are all read from the submodule.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            brand/requirements.txt
+      - name: Install the pinned stack
+        run: pip install -r requirements.txt
+      - name: Install the browser the pictures are drawn with
+        run: python -m playwright install --with-deps chromium
+      - name: Licenses (REUSE)
+        run: reuse lint
+      - name: The tree's rules
+        run: python tools/check.py
+      - name: Every picture is what its sources give (no browser)
+        run: python tools/export.py --check --static
+      - name: Tests
+        run: python -m pytest -rs tests
+      # Exact pixels are the exporting machine's to compare: this runner's
+      # Chromium draws an edge a shade apart. Gross drift (a shape out of
+      # place, a picture not redrawn) fails here.
+      - name: The pictures, drawn again, within tolerance
+        run: python tools/export.py --check --tolerant

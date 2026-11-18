@@ -1,0 +1,83 @@
+# The commit-message gate: the first check on every pull request.
+#
+# Vendored from kleidos-dev/agents
+# (plugins/kleidos-common/skills/git-commits/templates/commit-check.yml).
+# Change it there and copy it here with sync_commit_check.py.
+#
+# This job runs with a read-only token, also for pull requests from forks.
+# It checks the pull request's commits (base..head, merges skipped) with
+# the checker as the base branch has it, so a change to the checker does
+# not judge its own pull request, writes the result to the job summary and
+# to an artifact, and fails on any error. pull_request runs this workflow
+# file as the pull request has it, so review any change to this file.
+# A pull request opened by Dependabot or Renovate is not checked: they
+# author their own messages, which nobody can reword, and GitHub gives the
+# comment workflow a read-only token on their runs. The comment on the
+# pull request is posted by commit-check-comment.yml, which reads that
+# artifact and never runs code from the pull request.
+name: commit-check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commit-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  commit-messages:
+    name: commit messages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check the pull request's commits
+        id: check
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          case "$PR_AUTHOR" in
+            'dependabot[bot]' | 'renovate[bot]')
+              echo "Opened by $PR_AUTHOR, which authors its own commit messages: not checked." | tee -a "$GITHUB_STEP_SUMMARY"
+              echo "status=0" >> "$GITHUB_OUTPUT"
+              exit 0
+              ;;
+          esac
+          checker=.github/commit-check/check_commit_msg.py
+          out="$RUNNER_TEMP/commit-check"
+          mkdir -p "$out"
+          if ! git show "$BASE_SHA:$checker" > "$out/check_commit_msg.py" 2>/dev/null; then
+            echo "The base branch has no checker yet; using the pull request's copy."
+            cp "$checker" "$out/check_commit_msg.py"
+          fi
+          status=0
+          python3 "$out/check_commit_msg.py" --range "$BASE_SHA..$HEAD_SHA" \
+            --pr "$PR_NUMBER" --head-sha "$HEAD_SHA" --json "$out/result.json" || status=$?
+          if [ -f "$out/result.json" ]; then
+            python3 "$out/check_commit_msg.py" --render "$out/result.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+      - name: Keep the result for the comment workflow
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: commit-check
+          path: ${{ runner.temp }}/commit-check/result.json
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Fail on a rule the commits break
+        if: steps.check.outputs.status != '0'
+        env:
+          STATUS: ${{ steps.check.outputs.status }}
+        run: |
+          echo "The commit messages break the rules listed above (exit $STATUS)."
+          exit 1

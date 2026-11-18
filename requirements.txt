@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: MIT
+#
+# What the exporter and the checks run. Everything is brand's pinned stack:
+# both repositories draw with one browser and one encoder, so the pins live
+# in one place, the submodule. Nothing here is copied into the tree.
+#   git submodule update --init
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#   .venv/bin/python -m playwright install chromium
+# Python 3.14 (.python-version).
+-r brand/requirements.txt

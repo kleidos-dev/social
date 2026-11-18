@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+# Install once per clone: pre-commit install --hook-type pre-commit --hook-type commit-msg
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: local
+    hooks:
+      - id: kleidos-commit-msg
+        name: commit message (72 columns, imperative, no attribution)
+        entry: python3 .github/commit-check/check_commit_msg.py
+        language: system
+        stages: [commit-msg]
+      - id: social-check
+        name: the tree's rules (tools/check.py)
+        entry: .venv/bin/python tools/check.py
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

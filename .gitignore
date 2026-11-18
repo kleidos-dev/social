@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+.DS_Store
+# One-off exports (a video's thumbnail) that are not part of the pack
+/dist/

@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  # The brand repository. A new commit of it changes what every picture here
+  # is drawn from: export again and look at the pictures before merging.
+  - package-ecosystem: gitsubmodule
+    directory: /
+    schedule:
+      interval: weekly

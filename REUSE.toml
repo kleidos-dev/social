@@ -1,0 +1,43 @@
+version = 1
+SPDX-PackageName = "social"
+SPDX-PackageSupplier = "José M. Requena Plens <jmrplens@kleidos.dev>"
+SPDX-PackageDownloadLocation = "https://github.com/kleidos-dev/social"
+
+# Everything here is Kleidos's own. The artwork (the sources, the motifs, the
+# exported images and their previews) and the pack's data are under
+# GPL-3.0-or-later, the firmware's license; the tooling is MIT (below).
+# The brand repository, at brand/, is a submodule and its own REUSE project;
+# reuse lint does not descend into it.
+#
+# Two things this file cannot express, stated in TRADEMARKS.md: additional
+# terms under section 7 of the GNU GPL version 3. Under 7(e), the license
+# grants no rights under trademark law in the name "Kleidos" or in the
+# Kleidos mark; under 7(c), a modified version of a file under the GPL must
+# be marked in reasonable ways as different from the original, and must not
+# misrepresent the origin of the material.
+[[annotations]]
+path = ["**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# What is more useful to everyone under the MIT License, as in brand: the
+# tooling (the exporter, the checks, their tests, the CI, the pins and the
+# configuration), and the commit-message gate, this repository's copy of the
+# agents repository's git-commits skill (written by its sync_commit_check.py),
+# under that repository's MIT License.
+[[annotations]]
+path = [
+  "tools/**",
+  "tests/**",
+  ".github/**",
+  "requirements.txt",
+  ".pre-commit-config.yaml",
+  ".editorconfig",
+  ".gitignore",
+  ".gitmodules",
+  ".python-version",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
+SPDX-License-Identifier = "MIT"

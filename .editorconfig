@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{yml,yaml,json,svg,css}]
+indent_size = 2
+
+# Markdown: one line per paragraph, and a trailing space can be a line break.
+[*.md]
+trim_trailing_whitespace = false
+
+# Files kept byte for byte: the license text, and the commit-message gate
+# copied from the agents repository.
+[{LICENSE,LICENSES/**,.github/commit-check/**}]
+trim_trailing_whitespace = unset
+insert_final_newline = unset
+indent_size = unset

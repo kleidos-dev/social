@@ -1,0 +1,24 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <title>Kleidos avatar: the mark on the stage ground, its ring inside the square every circle crop keeps</title>
+  <g id="ground">
+    <rect x="0" y="0" width="1000" height="1000" fill="#0a0c0f"/>
+  </g>
+  <g id="content">
+    <g class="mark" transform="translate(500 500) scale(8)">
+      <circle cx="0" cy="0" r="42" fill="none" stroke="#00D2FF" stroke-width="3"/>
+      <rect x="-14" y="-28" width="28" height="56" rx="14" fill="#0F3460"/>
+      <rect x="-14" y="-28" width="28" height="56" rx="14" fill="none" stroke="#00D2FF" stroke-width="2.5"/>
+      <circle cx="0" cy="-4" r="5" fill="#00D2FF"/>
+      <rect x="-1.5" y="-4" width="3" height="14" fill="#00D2FF"/>
+    </g>
+  </g>
+  <g id="guides">
+    <rect id="safe" x="146" y="146" width="708" height="708" fill="none" stroke="#ffd43b" stroke-width="2"/>
+    <circle id="crop" cx="500" cy="500" r="499" fill="none" stroke="#ffd43b" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <title>Kleidos watermark for the YouTube player: the mark on transparency</title>
+  <g id="ground">
+  </g>
+  <g id="content">
+    <g class="mark" transform="translate(300 300) scale(6.5)">
+      <circle cx="0" cy="0" r="42" fill="none" stroke="#00D2FF" stroke-width="3"/>
+      <rect x="-14" y="-28" width="28" height="56" rx="14" fill="#0F3460"/>
+      <rect x="-14" y="-28" width="28" height="56" rx="14" fill="none" stroke="#00D2FF" stroke-width="2.5"/>
+      <circle cx="0" cy="-4" r="5" fill="#00D2FF"/>
+      <rect x="-1.5" y="-4" width="3" height="14" fill="#00D2FF"/>
+    </g>
+  </g>
+  <g id="guides">
+    <rect id="safe" x="0" y="0" width="600" height="600" fill="none" stroke="#ffd43b" stroke-width="2"/>
+  </g>
+</svg>

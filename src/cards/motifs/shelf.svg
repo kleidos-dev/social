@@ -1,0 +1,19 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <title>Card motif "shelf": the nine boards Kleidos runs on, at one true scale, on two shelves, the lower one the card's, each on its unlock screen; the exporter draws brand's board fronts in place of the box</title>
+  <g id="ground">
+    <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
+  </g>
+  <g id="content">
+    <g id="motif" transform="translate(0 0)">
+      <rect id="boards.0" data-boards="sticks3 m5stickc-plus2 m5stickc-plus1 m5stickc-plus-se coreink cores3-se" data-gap="5" data-align="end" x="0" y="0" width="800" height="148" fill="none"/>
+      <line id="shelf.0" x1="220" y1="150" x2="800" y2="150" stroke="#2e3033" stroke-width="4"/>
+      <rect id="boards.1" data-boards="m5stack-core2-v13 cardputer tdeck-plus" data-gap="5" data-align="end" x="0" y="184" width="800" height="296" fill="none"/>
+    </g>
+  </g>
+  <g id="guides"/>
+</svg>

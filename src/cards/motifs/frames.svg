@@ -1,0 +1,22 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <title>Card motif "frames": a 16:9 frame, a 2:1 frame and a circle crop, nested</title>
+  <g id="ground">
+    <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
+  </g>
+  <g id="content">
+    <g id="motif" transform="translate(0 0)">
+      <rect x="6" y="31" width="788" height="443" rx="28" fill="none" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="130" y="117" width="540" height="270" rx="20" fill="#0f3460" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="400" cy="252" r="92" fill="#0a0c0f" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  <g id="guides">
+    <rect id="safe" x="0" y="0" width="800" height="480" fill="none" stroke="#ffd43b" stroke-width="2"/>
+    <line id="shelf" x1="0" y1="480" x2="800" y2="480" stroke="#ffd43b" stroke-width="2"/>
+  </g>
+</svg>
