@@ -1,6 +1,16 @@
+<!-- BEGIN GENERATED: banner (tools/export.py); do not edit by hand -->
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="svg/readme/social/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="svg/readme/social/banner-light.svg">
+  <img src="svg/readme/social/banner-light.svg" width="100%" alt="Kleidos Social: The images of every profile and repository card, generated from brand.">
+</picture>
+
+<!-- END GENERATED: banner -->
+
 # social
 
-The images [Kleidos](https://kleidos.dev) shows where it has a profile, and the social preview card of every repository of the project. All of them are drawn from the [`brand`](https://github.com/kleidos-dev/brand) repository, which this one holds as a submodule: its mark, its lockup, its colors and its typefaces.
+The images [Kleidos](https://kleidos.dev) shows where it has a profile, the social preview card of every repository of the project, and the banner at the head of each repository's README. All of them are drawn from the [`brand`](https://github.com/kleidos-dev/brand) repository, which this one holds as a submodule: its mark, its lockup, its colors and its typefaces.
 
 Kleidos is free firmware that turns a small ESP32 board into a hardware password manager.
 
@@ -8,7 +18,7 @@ Kleidos is free firmware that turns a small ESP32 board into a hardware password
 
 ## What is here
 
-Only what is needed now: YouTube, MakerTube, and one card per repository. Another platform is a source, a row of `pack.json` and an export.
+Only what is needed now: YouTube, MakerTube, one card and one README banner per repository. Another platform is a source, a row of `pack.json` and an export.
 
 ### Profile images
 
@@ -61,6 +71,51 @@ At 400 px wide, the size a chat or a search result gives a card, the title's cap
 
 **A new repository** is one row under `cards.repos` in `pack.json` (its name, a label, one line and the lines it breaks into, a motif) and an export. It may reuse a motif or bring its own: a file under [`src/cards/motifs/`](src/cards/motifs/), 800 x 480, standing on its bottom edge.
 
+### README banners
+
+The repository card laid out again as a wide strip, for the head of each repository's `README.md`: the lockup, a hairline and the label, the repository's name, its line in one or two lines, the ruled shelf and the repository's motif standing on it. Same parts, same type and same colors as the card, on 2560 x 800 units (the card's units), published 1280 x 400 as SVG: words as outlines, no script, no style sheet, no font, no animation. A README shows it 823 to 838 px wide on a computer and 279 to 349 px wide on a phone.
+
+<!-- BEGIN GENERATED: readme-banners (tools/export.py); do not edit by hand -->
+
+| Repository | Dark theme | Light theme | Label | Line | Motif | In its README |
+| --- | --- | --- | --- | --- | --- | --- |
+| `kleidos-dev/kleidos` | [33 kB](svg/readme/kleidos/banner-dark.svg) | [33 kB](svg/readme/kleidos/banner-light.svg) | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) | linked from here |
+| `kleidos-dev/boards` | [409 kB](svg/readme/boards/banner-dark.svg) | [410 kB](svg/readme/boards/banner-light.svg) | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/brand` | [25 kB](svg/readme/brand/banner-dark.svg) | [25 kB](svg/readme/brand/banner-light.svg) | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/social` | [32 kB](svg/readme/social/banner-dark.svg) | [32 kB](svg/readme/social/banner-light.svg) | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) | read from here |
+| `kleidos-dev/agents` | [28 kB](svg/readme/agents/banner-dark.svg) | [28 kB](svg/readme/agents/banner-light.svg) | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/.github` | [34 kB](svg/readme/dot-github/banner-dark.svg) | [34 kB](svg/readme/dot-github/banner-light.svg) | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/meter` | [30 kB](svg/readme/meter/banner-dark.svg) | [30 kB](svg/readme/meter/banner-light.svg) | INSTRUMENT | The bench meter that measures what each Kleidos board draws. | [`gauge`](src/cards/motifs/gauge.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/videos` | [30 kB](svg/readme/videos/banner-dark.svg) | [30 kB](svg/readme/videos/banner-light.svg) | VIDEOS | The sources, inputs and builds of every Kleidos channel video. | [`reel`](src/cards/motifs/reel.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/posts` | [26 kB](svg/readme/posts/banner-dark.svg) | [26 kB](svg/readme/posts/banner-light.svg) | POSTS | Drafts and records of every Kleidos publication. | [`sheets`](src/cards/motifs/sheets.svg) | a copy in `.github/readme/` |
+
+<!-- END GENERATED: readme-banners -->
+
+Each repository has two files, served with `<picture>` and `prefers-color-scheme`: `banner-dark.svg` has no ground and sits on GitHub's dark page; `banner-light.svg` is the same drawing on the stage ground with rounded corners, a dark tile on the white page, which is what brand prescribes for a light page (on white its color mark holds only from 48 px, and a phone shows this mark at 24). The light file is also the fallback for a renderer that ignores `<picture>`. The boards banner carries each board's unlock screen as an inner PNG, pixels only, on its panel.
+
+| Part | Place and size | Style |
+| --- | --- | --- |
+| Canvas | 2560 x 800, published `width="1280" height="400"` | the dark file: no ground; the light file: the stage color, corners rounded 56 units |
+| Lockup | `translate(81 72) scale(0.17)`, the mark box 224 units | brand's horizontal lockup for a dark ground; the ring's outer edge stands on the 96 unit margin |
+| Hairline and label | x 1036, y 113 to 255; label at x 1104, baseline 210, 72 units | the rule color; Mona Sans Mono 500, capitals, tracked 0.14 em, second ink |
+| Title | x 96, baseline 500, 192 units | the display face (width 112.5, weight 650, optical size 72), tracked -0.025 em; the repository's name as GitHub writes it |
+| Line | baselines 612 and 692, 64 units, one or two lines inside the column (96 to 1568) | the text face (weight 400, optical size 20), second ink |
+| Shelf | at 744, from 96 to 2464, a tick every 40 units | the rule color, 4 units |
+| Motif | stands on the shelf, inside 800 x 480 at (1664, 262) | the card's motif of the same repository, unchanged |
+
+On a 360 px phone (279 px wide) the mark is 24.5 px, the least brand gives it on a dark ground, and the title's capitals 15 px; on a computer (823 px) the line's x-height is 10 px and the label's capitals 17 px. The line is decorative on a phone, as a card's is at 320 px: the alt text carries it. `tools/check.py` holds every banner to those floors.
+
+A banner row (`readme_banners.repos` in `pack.json`) takes the label, the line and the motif of the repository's card and adds only the line's break into one or two lines; a repository with no card yet carries its own, and they move to its card row the day it gets one. Each file carries brand's SVG metadata block (title, description, rights, the master's address here as its identifier), written by the exporter from its record.
+
+**Into a repository**: a byte copy, at `.github/readme/banner-dark.svg` and `banner-light.svg` with a `SHA256SUMS` beside them, so a private repository, a clone and a fork all show it. `tools/sync_readme_banners.py` (standard library only) writes them and the README's block, right above the first level-1 heading, which stays:
+
+```sh
+python3 tools/sync_readme_banners.py --write ../boards                 # the copies, SHA256SUMS and the README's block
+python3 tools/sync_readme_banners.py --check ../boards ../brand ...    # exit 1 on a stale or missing copy or block
+```
+
+The row is found from the clone's `origin` address, or given with `--repo NAME`. A `linked` row (the firmware, while its tree is being restructured) gets the block with this repository's public addresses and no copy. Each repository with CI checks its copy with `shasum -a 256 -c .github/readme/SHA256SUMS`; a copy changes only here, then `--write` again.
+
 ### Previews
 
 For whoever reviews the pack, not for upload. Each one is made from the exported files' own pixels.
@@ -74,6 +129,7 @@ For whoever reviews the pack, not for upload. Each one is made from the exported
 | [`previews/youtube-banner.png`](previews/youtube-banner.png) | The YouTube banner, device by device. What a TV, a computer, a tablet and a phone show of the one file, at half its pixels. |
 | [`previews/makertube-banner.png`](previews/makertube-banner.png) | The MakerTube banner, both stored sizes. The 1920 x 317 file at two thirds of its pixels, and the 600 x 100 copy PeerTube also stores, pixel for pixel. |
 | [`previews/cards.png`](previews/cards.png) | The repository cards. Each card at half its pixels, at the 640, 400 and 320 px a page or a chat shows it, and in the centered 1.91:1 crop some sites apply. The last one is the template, with a placeholder name. |
+| [`previews/readme-banners.png`](previews/readme-banners.png) | The README banners. Each banner in both themes on GitHub's two page grounds, as wide as a README shows it on a computer (823 px) and on a phone (279 px), and the phone's again with each pixel enlarged twice. |
 
 <!-- END GENERATED: previews -->
 
@@ -92,6 +148,7 @@ What each image answers to, read at the address and on the day its row states.
 | MakerTube (PeerTube) | Channel avatar | 1500 x 1500, 1:1 | under 8.0 MB | PNG, JPEG, GIF or WebP | a circle; stored at 1500, 600, 120 and 48 px square | the square inside the circle | [2026-11-17](https://github.com/Chocobozzz/PeerTube/blob/develop/server/core/initializers/constants.ts). ACTOR_IMAGES_SIZE and CONSTRAINTS_FIELDS.ACTORS.IMAGE in PeerTube's source. The instance's own configuration was read for the first pack on 2026-11-10 and gave the same limits; it was not read again. |
 | MakerTube (PeerTube) | Channel banner | 1920 x 317, about 6:1 | under 8.0 MB | PNG, JPEG, GIF or WebP | stored at 1920 x 317 and 600 x 100; a narrow page shows the middle | the central 1440 x 317 | [2026-11-17](https://github.com/Chocobozzz/PeerTube/blob/develop/server/core/initializers/constants.ts). The same constants as the avatar. |
 | GitHub | Repository social preview | 2560 x 1280, 2:1 | under 1.0 MB | PNG, JPG or GIF | none on GitHub; some sites that show the link crop it to 1.91:1, centered | 2240 x 1024 at (160, 128), inside the centered 1.91:1 crop | [2026-11-17](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview). Under 1 MB; at least 640 x 320, 1280 x 640 for best display; a solid background is recommended. Twice the recommended size, by the owner's decision. |
+| GitHub | README banner | 1280 x 400, 3.2:1 | under 500 kB | SVG, PNG, JPG or GIF, referenced from the README | none; shown as wide as the README's column: 823 to 838 px on a computer, 279 to 349 px on a phone | the whole canvas | [2026-11-19](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax). The widths and GitHub's page grounds (#ffffff light, #0d1117 dark) were measured on github.com on the day read, logged out; the 500 kB limit is this pack's own. |
 
 <!-- END GENERATED: rules -->
 
@@ -134,7 +191,7 @@ The pins (Pillow, Playwright, fontTools, HarfBuzz) are brand's, in `brand/requir
 
 ## License
 
-The artwork (the SVG sources, the motifs, the exported images and their previews) and the pack's data are licensed under the [GNU General Public License, version 3 or any later version](LICENSE) (GPL-3.0-or-later), the firmware's license. The tooling (the code under `tools/`, the tests, the CI, the pins and the configuration, with the commit-message gate copied from the project's `agents` repository) is under the [MIT License](LICENSES/MIT.txt), as brand's is. Both are approved by the Open Source Initiative; nothing in this repository is under any other license. Credits: [`NOTICE.md`](NOTICE.md); file by file: `REUSE.toml`.
+The artwork (the SVG sources, the motifs, the exported images, the README banners and their previews) and the pack's data are licensed under the [GNU General Public License, version 3 or any later version](LICENSE) (GPL-3.0-or-later), the firmware's license. The tooling (the code under `tools/`, the tests, the CI, the pins and the configuration, with the commit-message gate copied from the project's `agents` repository) is under the [MIT License](LICENSES/MIT.txt), as brand's is. Both are approved by the Open Source Initiative; nothing in this repository is under any other license. Credits: [`NOTICE.md`](NOTICE.md); file by file: `REUSE.toml`.
 
 Kleidos is not a registered trademark. As section 7(e) of the GPL allows, the license grants no rights under trademark law in the name "Kleidos" or in the Kleidos mark. As section 7(c) allows, a modified version of a file under the GPL here must be marked as different from the original and must not misrepresent its origin; a file passed on unchanged needs nothing. [`TRADEMARKS.md`](TRADEMARKS.md), a copy of brand's, says what that means and what the project asks of those who use its name. Writing about Kleidos? The images made for that are brand's press kit, not these.
 

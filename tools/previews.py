@@ -4,14 +4,17 @@
 A preview is for the person who reviews the pack, not for upload: the contact
 sheet of every file, the avatar in the circle each platform cuts at the sizes
 it shows, the YouTube banner as each device crops it, the MakerTube banner at
-both stored sizes, and every repository card at the widths a page or a chat
-gives it and in the 1.91:1 crop some sites apply.
+both stored sizes, every repository card at the widths a page or a chat
+gives it and in the 1.91:1 crop some sites apply, and every README banner on
+GitHub's two page grounds at the widths a README shows it.
 
 A sheet is drawn in two steps, as brand draws a picture that holds captures:
 Chromium draws its ground, its tiles and its labels (outlines of the pinned
 fonts), and Pillow pastes the pictures on it, resampled from the exported
 files' own pixels. So a preview shows what was exported, never a second
-drawing of the source.
+drawing of the source. A README banner is an SVG file: Chromium draws the
+committed file itself at each width, as a browser shows it on GitHub, and that
+sheet is the only place a browser touches a banner.
 """
 from __future__ import annotations
 
@@ -50,6 +53,10 @@ ENLARGED = 4
 #: The widths a repository card is shown at, beside the half-size view.
 CARD_WIDTHS = (640, 400, 320)
 CROP_RATIO = 1.91
+#: The widths a README shows a banner at (readme_banners.WIDE_PX, NARROW_PX), and the phone's enlargement.
+BANNER_WIDTHS = (823, 279)
+BANNER_ENLARGED = 2
+BANNER_PAD = 24
 
 
 def _image(data: bytes) -> Any:
@@ -189,7 +196,7 @@ class Sheet:
         #: The metadata the sheet carries (records.preview), set by the exporter.
         self.record: Any = None
         if self.kind == "contact-sheet":
-            self.shown = list(shown)
+            self.shown = [picture for picture in shown if picture.kind != "banner"]
         elif self.kind == "avatars":
             self.shown = [picture for picture in shown if picture.path.as_posix() in AVATAR_SIZES]
         elif self.kind == "youtube-banner":
@@ -198,6 +205,8 @@ class Sheet:
             self.shown = [picture for picture in shown if picture.path.as_posix() == "png/makertube/banner.png"]
         elif self.kind == "cards":
             self.shown = [picture for picture in shown if picture.kind == "card"]
+        elif self.kind == "readme-banners":
+            self.shown = [picture for picture in shown if picture.kind == "banner"]
         else:
             raise ValueError(f"pack.json: {spec['file']} is of the kind {self.kind!r}, which no preview draws")
         if not self.shown:
@@ -321,4 +330,36 @@ class Sheet:
                 layout.plate(x, below + LABEL_BAND, resized(image, (width, width // 2)))
                 x += width + GAP
             y += LABEL_BAND + half[1] + GAP
+        return layout
+
+    def _readme_banners(self, browser: raster.Browser, drawn: dict[str, bytes], values: dict[str, Any]) -> Layout:
+        wide, narrow = BANNER_WIDTHS
+        grounds = self.data["readme_banners"]["page_grounds"]
+        tile_width = max(wide, narrow * (1 + BANNER_ENLARGED) + BANNER_PAD) + 2 * BANNER_PAD
+        layout = Layout(MARGIN + 2 * (tile_width + GAP) - GAP + MARGIN, values)
+        top = layout.head(self.spec, pack.brand_root(self.root))
+        owner = self.data["cards"]["owner"]
+        by_repo: dict[str, dict[str, Any]] = {}
+        for picture in self.shown:
+            by_repo.setdefault(picture.path.parent.name, {})[picture.path.stem.removeprefix("banner-")] = picture
+        y = top
+        for name, themes in by_repo.items():
+            layout.label(MARGIN, y, f"{owner}/{name.replace('dot-', '.', 1) if name.startswith('dot-') else name}", values["social.ink"])
+            y += LABEL_BAND
+            height = BANNER_PAD + round(wide / 3.2) + BANNER_PAD + LABEL_BAND + round(narrow / 3.2) * BANNER_ENLARGED + BANNER_PAD
+            for column, theme in enumerate(("dark", "light")):
+                picture = themes[theme]
+                svg = self._bytes(picture, drawn).decode("utf-8")
+                x = MARGIN + column * (tile_width + GAP)
+                ground = grounds[theme]
+                ink = values["social.ink-2"] if theme == "dark" else values["social.light.ink-2"]
+                layout.tile(x, y, tile_width, height, ground)
+                big = png.clean(browser.draw(svg, (wide, round(wide / 3.2)), f"{name}-{theme}-{wide}"), flatten=None)
+                layout.plate(x + BANNER_PAD, y + BANNER_PAD, big.convert("RGBA"), frame=False)
+                below = y + BANNER_PAD + big.height + BANNER_PAD
+                layout.label(x + BANNER_PAD, below - 8, f"{theme} theme: {wide} px; {narrow} px, and at {BANNER_ENLARGED}x", ink)
+                small = png.clean(browser.draw(svg, (narrow, round(narrow / 3.2)), f"{name}-{theme}-{narrow}"), flatten=None).convert("RGBA")
+                layout.plate(x + BANNER_PAD, below + LABEL_BAND, small, frame=False)
+                layout.plate(x + BANNER_PAD + narrow + BANNER_PAD, below + LABEL_BAND, enlarged(small, BANNER_ENLARGED), frame=False)
+            y += height + GAP
         return layout

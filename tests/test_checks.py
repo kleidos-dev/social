@@ -199,7 +199,7 @@ def test_a_card_under_another_name_is_refused(tree: Path) -> None:
 
 def test_a_motif_no_card_uses_is_refused(tree: Path) -> None:
     shutil.copy(tree / "src/cards/motifs/typing.svg", tree / "src/cards/motifs/spare.svg")
-    assert found(tree, "motifs/spare.svg", "no card uses this motif")
+    assert found(tree, "motifs/spare.svg", "no card and no banner uses this motif")
 
 
 # --- Stale exports -----------------------------------------------------------------------

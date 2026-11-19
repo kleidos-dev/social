@@ -55,7 +55,10 @@ def findings(root: Path, only: set[str] | None = None) -> list[str]:
         if not path.is_file():
             found.append(f"{name}: M001: missing; run tools/export.py")
             continue
-        found += meta.png_findings(name, path.read_bytes(), picture.meta)
+        if picture.kind == "banner":
+            found += meta.svg_findings(name, path.read_text(encoding="utf-8"), picture.meta, picture.slug or "")
+        else:
+            found += meta.png_findings(name, path.read_bytes(), picture.meta)
     found += check.metadata_findings(root, collected, only)
     exempt = tuple(pattern for pattern, _ in METADATA_EXEMPT)
     for path in check.tracked(root):

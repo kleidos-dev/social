@@ -62,6 +62,8 @@ def _texts(path: Path) -> dict[str, str]:
 
 def test_every_picture_says_what_it_is_who_made_it_and_under_which_license() -> None:
     for picture in export.collect(ROOT).pictures:
+        if picture.kind == "banner":
+            continue  # an SVG: its metadata block is held in tests/test_readme_banners.py
         data = (ROOT / picture.path).read_bytes()
         names = png.chunk_names(data)
         assert names.index("iTXt") < names.index("IDAT"), picture.path  # before the pixels, for a reader that streams

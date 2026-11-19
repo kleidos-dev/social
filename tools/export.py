@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 """Export the social pack, or check that what is committed is what the sources give.
 
-    tools/export.py                     draw every image, card and preview, and write the record
-                                        and the README's tables
+    tools/export.py                     draw every image, card, README banner and preview, and write
+                                        the record and the README's tables
     tools/export.py --check             draw everything again and fail on any difference, pixel for
                                         pixel; refused under a browser other than the recorded one
     tools/export.py --check --static    what needs no browser: the tables, and each picture's bytes
@@ -19,6 +19,8 @@ draws, through Playwright, from SVG that holds outlines only; Pillow encodes
 again from the pixels alone, and each file then carries brand's metadata
 profile, written from its record (records.py). The exact comparison belongs to the machine that
 exported; the static check and the tolerant one run anywhere, and CI runs both.
+The README banners are SVG files no browser draws (readme_banners.py), so every
+check holds them byte for byte.
 """
 from __future__ import annotations
 
@@ -36,8 +38,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cards  # noqa: E402
 import pack  # noqa: E402
 import previews  # noqa: E402
+import readme_banners  # noqa: E402
 import records  # noqa: E402
 import source  # noqa: E402
+import sync_readme_banners  # noqa: E402
 from kleidos_brand import boards, mark, meta, png, raster, record  # noqa: E402
 
 ROOT = pack.ROOT
@@ -46,12 +50,14 @@ TOLERANCE = 0.005
 COMMENT = ("Written by tools/export.py: the browser the pictures were drawn with, and the bytes of each picture and of"
            " what it was drawn from, the brand files included. Do not edit; run the exporter.")
 GENERATED_DIRS = (Path("png/youtube"), Path("png/makertube"), Path("png/github"), pack.PREVIEWS_DIR)
+#: The folder the README banners are written to, one folder per repository inside it.
+BANNER_DIR = Path("svg/readme")
 THUMBNAIL = Path("src/youtube/thumbnail.svg")
 
 
 @dataclass(frozen=True)
 class Picture:
-    """A generated PNG: its size, its limit, what it is drawn from and how."""
+    """A generated picture (a PNG, or a README banner's SVG): its size, its limit, what it is drawn from and how."""
 
     path: Path
     size: tuple[int, int]
@@ -59,10 +65,11 @@ class Picture:
     inputs: tuple[Path, ...]
     draw: Callable[[raster.Browser, dict[str, bytes]], bytes]
     what: str
-    kind: str  # "image", "card" or "preview"
+    kind: str  # "image", "card", "banner" or "preview"
     meta: Any  # the metadata it carries (records.py)
     limit: int | None = None
     rule: str | None = None
+    slug: str | None = None  # a banner's id prefix (kleidos_brand.meta.svg_slug's role)
 
 
 @dataclass
@@ -74,6 +81,7 @@ class Collected:
     drawings: dict[Path, source.Drawing] = field(default_factory=dict)  # by PNG path
     sources: dict[Path, source.Drawing] = field(default_factory=dict)  # by source path
     cards: list[cards.Card] = field(default_factory=list)
+    banners: list[readme_banners.Banner] = field(default_factory=list)
     references: dict[Path, tuple[str, str | None]] = field(default_factory=dict)  # a mark-alone PNG's reference drawing
 
 
@@ -159,6 +167,16 @@ def collect(root: Path = ROOT) -> Collected:
             _drawer(built.drawing, size, pack.limit(data, rule), built.row.file.stem, described),
             f"the card of {data['cards']['owner']}/{built.row.repo}", "card", described, pack.limit(data, rule), rule))
 
+    # --- The README banners --------------------------------------------------------------
+    banner_rule = readme_banners.section(data)["rule"]
+    for built in readme_banners.banners(root, data):
+        out.banners.append(built)
+        body = built.svg.encode()
+        out.pictures.append(Picture(
+            built.path, readme_banners.PUBLISHED, drawn_from(built.svg, built.record), (*built.inputs, *brand_inputs(), *board_inputs(built.drawing)),
+            lambda _browser, _drawn, body=body: body, f"the README banner of {data['cards']['owner']}/{built.row.repo}, {built.theme} theme",
+            "banner", built.record, pack.limit(data, banner_rule), banner_rule, built.slug))
+
     # --- The previews --------------------------------------------------------------------
     shown = [picture for picture in out.pictures]
     for spec in data["previews"]:
@@ -226,11 +244,25 @@ def blocks(collected: Collected, files: dict[str, Any]) -> dict[str, str]:
     for entry in data["not_made"]:
         not_made.append(f"| {entry['platform']} | {entry['asset']} | {entry['why']} |")
 
+    banner_rows = ["| Repository | Dark theme | Light theme | Label | Line | Motif | In its README |", "| --- | --- | --- | --- | --- | --- | --- |"]
+    by_row: dict[str, dict[str, Picture]] = {}
+    for picture in collected.pictures:
+        if picture.kind == "banner":
+            by_row.setdefault(picture.path.parent.name, {})[picture.path.stem.removeprefix("banner-")] = picture
+    where = {"copy": "a copy in `.github/readme/`", "linked": "linked from here", "self": "read from here"}
+    for row in readme_banners.rows(data):
+        files_of = by_row.get(row.name, {})
+        cells = [f"[{weight(files_of[theme].path)}]({files_of[theme].path})" if theme in files_of else "not built" for theme in sync_readme_banners.THEMES]
+        banner_rows.append(f"| `{data['cards']['owner']}/{row.repo}` | {cells[0]} | {cells[1]} | {row.label.upper()} | {row.line} |"
+                           f" [`{row.motif}`]({cards.motif_path(data, row.motif)}) | {where[row.mode]} |")
+
     preview_rows = ["| File | What it shows |", "| --- | --- |"]
     for spec in data["previews"]:
         preview_rows.append(f"| [`{spec['file']}`]({spec['file']}) | {spec['title']}. {spec['lede']} |")
-    return {"images": "\n".join(images), "cards": "\n".join(card_rows), "rules": "\n".join(rules),
-            "not-made": "\n".join(not_made), "previews": "\n".join(preview_rows)}
+    own = sync_readme_banners.row(data, readme_banners.REPO)
+    banner = sync_readme_banners.picture(own, {theme: sync_readme_banners.master(data, own, theme) for theme in sync_readme_banners.THEMES})
+    return {"banner": banner, "images": "\n".join(images), "cards": "\n".join(card_rows), "readme-banners": "\n".join(banner_rows),
+            "rules": "\n".join(rules), "not-made": "\n".join(not_made), "previews": "\n".join(preview_rows)}
 
 
 def readme(root: Path, collected: Collected, files: dict[str, Any]) -> str:
@@ -251,6 +283,8 @@ def stale(root: Path, pictures: list[Picture]) -> list[Path]:
     for folder in GENERATED_DIRS:
         if (root / folder).is_dir():
             found += [path.relative_to(root) for path in sorted((root / folder).iterdir()) if path.is_file() and path.relative_to(root) not in owned]
+    if (root / BANNER_DIR).is_dir():
+        found += [path.relative_to(root) for path in sorted((root / BANNER_DIR).rglob("*")) if path.is_file() and path.relative_to(root) not in owned]
     return found
 
 
@@ -282,7 +316,7 @@ def write(root: Path = ROOT) -> int:
             files[picture.path.as_posix()] = {
                 "sha256": record.sha256(data),
                 "bytes": len(data),
-                "size": list(png.size(data)),
+                "size": list(picture.size if picture.kind == "banner" else png.size(data)),
                 "drawn_from": picture.source,
                 "inputs": {path.as_posix(): record.file_sha256(root / path) for path in picture.inputs},
             }
@@ -317,7 +351,10 @@ def static_findings(root: Path = ROOT) -> list[str]:
             found.append(f"{name}: missing; run tools/export.py")
             continue
         data = path.read_bytes()
-        found += png.findings(name, data, picture.size if picture.kind != "preview" else None, picture.limit, picture.meta)
+        if picture.kind == "banner":
+            found += banner_file_findings(name, data, picture)
+        else:
+            found += png.findings(name, data, picture.size if picture.kind != "preview" else None, picture.limit, picture.meta)
         if entry is None:
             found.append(f"{name}: exports.json has no record of it; run tools/export.py")
             continue
@@ -332,6 +369,17 @@ def static_findings(root: Path = ROOT) -> list[str]:
             found.append(f"{name}: stale: it is drawn from other files than the record names; run tools/export.py")
     for name in sorted(set(files) - {picture.path.as_posix() for picture in collected.pictures}):
         found.append(f"exports.json: records {name}, which nothing generates; run tools/export.py")
+    return found
+
+
+def banner_file_findings(name: str, data: bytes, picture: Picture) -> list[str]:
+    """Return how a README banner's committed file differs from what its row gives: its weight, its metadata, its bytes."""
+    found = []
+    if picture.limit is not None and len(data) >= picture.limit:
+        found.append(f"{name}: weighs {len(data):,} bytes; the limit is under {picture.limit:,}")
+    found += meta.svg_findings(name, data.decode("utf-8", errors="replace"), picture.meta, picture.slug or "")
+    if data != picture.draw(None, {}):  # type: ignore[arg-type]  # a banner needs no browser
+        found.append(f"{name}: is not what its row, the template, its motif and brand give; run tools/export.py")
     return found
 
 
@@ -365,6 +413,11 @@ def drawn_findings(root: Path = ROOT, tolerant: bool = False, only: frozenset[st
         if only is not None and picture.path.as_posix() not in only:
             continue
         again = picture.draw(browser, drawn)
+        if picture.kind == "banner":
+            # No browser draws a banner: its bytes are exact under any Chromium.
+            if again != kept:
+                found.append(f"{picture.path}: written again, it is not the committed file; run tools/export.py")
+            continue
         if tolerant:
             share = png.drift(again, kept)
             if share is None or share > TOLERANCE:

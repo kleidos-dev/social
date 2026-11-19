@@ -1,5 +1,5 @@
 {
-  "$comment": "The social pack: every image, the source it is drawn from, the PNG files it is given and the platform rule each file answers to; the repository cards; what is not made, and why; the previews. tools/export.py reads this file and writes the README's tables from it. Rules were read on the day each one states, at the address it states.",
+  "$comment": "The social pack: every image, the source it is drawn from, the PNG files it is given and the platform rule each file answers to; the repository cards; the README banners; what is not made, and why; the previews. tools/export.py reads this file and writes the README's tables from it. Rules were read on the day each one states, at the address it states.",
   "words": {
     "line": "Your passwords, on a board you already own.",
     "line_accent": "already own",
@@ -103,6 +103,20 @@
       "source": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview",
       "read": "2026-11-17",
       "notes": "Under 1 MB; at least 640 x 320, 1280 x 640 for best display; a solid background is recommended. Twice the recommended size, by the owner's decision."
+    },
+    "github-readme": {
+      "platform": "GitHub",
+      "asset": "README banner",
+      "upload_px": [1280, 400],
+      "ratio": "3.2:1",
+      "max_bytes": 500000,
+      "formats": "SVG, PNG, JPG or GIF, referenced from the README",
+      "crop": "none; shown as wide as the README's column: 823 to 838 px on a computer, 279 to 349 px on a phone",
+      "safe_zone": "the whole canvas",
+      "where": "the repository's README.md, above its first heading",
+      "source": "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax",
+      "read": "2026-11-19",
+      "notes": "The widths and GitHub's page grounds (#ffffff light, #0d1117 dark) were measured on github.com on the day read, logged out; the 500 kB limit is this pack's own."
     }
   },
   "images": [
@@ -209,6 +223,43 @@
       "motif": "shelf"
     }
   },
+  "readme_banners": {
+    "template": "src/readme/banner.svg",
+    "out": "svg/readme",
+    "rule": "github-readme",
+    "dest": ".github/readme",
+    "themes": {"dark": "page", "light": "tile"},
+    "page_grounds": {"dark": "#0d1117", "light": "#ffffff"},
+    "repos": [
+      {"repo": "kleidos", "lines": ["Free firmware that turns an ESP32 board", "into a hardware password manager."], "mode": "linked"},
+      {"repo": "boards", "lines": ["Drawings, measurements, schematics and 3D", "models of the boards Kleidos runs on."]},
+      {"repo": "brand", "lines": ["The logo, type, colors, tokens and press kit."]},
+      {"repo": "social", "lines": ["The images of every profile and repository", "card, generated from brand."], "mode": "self"},
+      {"repo": "agents", "lines": ["Skills and rules for the coding agents", "that work on Kleidos."]},
+      {"repo": ".github", "lines": ["The organization's profile, contributing", "guide, security policy and templates."]},
+      {
+        "repo": "meter",
+        "label": "Instrument",
+        "line": "The bench meter that measures what each Kleidos board draws.",
+        "lines": ["The bench meter that measures what", "each Kleidos board draws."],
+        "motif": "gauge"
+      },
+      {
+        "repo": "videos",
+        "label": "Videos",
+        "line": "The sources, inputs and builds of every Kleidos channel video.",
+        "lines": ["The sources, inputs and builds of every", "Kleidos channel video."],
+        "motif": "reel"
+      },
+      {
+        "repo": "posts",
+        "label": "Posts",
+        "line": "Drafts and records of every Kleidos publication.",
+        "lines": ["Drafts and records of every", "Kleidos publication."],
+        "motif": "sheets"
+      }
+    ]
+  },
   "not_made": [
     {"platform": "GitHub", "asset": "Organization picture", "why": "The organization already has its picture; it moves here when the profile's banner does."},
     {"platform": "YouTube", "asset": "Shorts thumbnail, end screen", "why": "No Short and no end screen is planned; each is a source, a row and an export the day one is."},
@@ -220,6 +271,7 @@
     {"file": "previews/avatars.png", "kind": "avatars", "title": "The avatar, as each platform crops it", "lede": "In a circle at the sizes YouTube and MakerTube show it, on a dark and on a light page, and the small ones again with each pixel enlarged four times."},
     {"file": "previews/youtube-banner.png", "kind": "youtube-banner", "title": "The YouTube banner, device by device", "lede": "What a TV, a computer, a tablet and a phone show of the one file, at half its pixels."},
     {"file": "previews/makertube-banner.png", "kind": "makertube-banner", "title": "The MakerTube banner, both stored sizes", "lede": "The 1920 x 317 file at two thirds of its pixels, and the 600 x 100 copy PeerTube also stores, pixel for pixel."},
-    {"file": "previews/cards.png", "kind": "cards", "title": "The repository cards", "lede": "Each card at half its pixels, at the 640, 400 and 320 px a page or a chat shows it, and in the centered 1.91:1 crop some sites apply. The last one is the template, with a placeholder name."}
+    {"file": "previews/cards.png", "kind": "cards", "title": "The repository cards", "lede": "Each card at half its pixels, at the 640, 400 and 320 px a page or a chat shows it, and in the centered 1.91:1 crop some sites apply. The last one is the template, with a placeholder name."},
+    {"file": "previews/readme-banners.png", "kind": "readme-banners", "title": "The README banners", "lede": "Each banner in both themes on GitHub's two page grounds, as wide as a README shows it on a computer (823 px) and on a phone (279 px), and the phone's again with each pixel enlarged twice."}
   ]
 }

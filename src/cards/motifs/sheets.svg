@@ -1,0 +1,29 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <title>Card motif "sheets": three drafts standing side by side, the front one written and checked</title>
+  <desc>A line drawing of three sheets standing side by side, the front one with its lines written and a check under them, the motif of the posts repository.</desc>
+  <g id="ground">
+    <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
+  </g>
+  <g id="content">
+    <g id="motif" transform="translate(0 0)">
+      <rect x="446" y="30" width="300" height="444" rx="24" fill="#0f3460" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="326" y="76" width="300" height="398" rx="24" fill="#0f3460" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="206" y="122" width="300" height="352" rx="24" fill="#0a0c0f" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="252" y1="182" x2="420" y2="182" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="252" y1="246" x2="460" y2="246" stroke="#eceef1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="252" y1="290" x2="444" y2="290" stroke="#eceef1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="252" y1="334" x2="460" y2="334" stroke="#eceef1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="252" y1="378" x2="372" y2="378" stroke="#eceef1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M396 426l26 20l42 -44" fill="none" stroke="#eceef1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  <g id="guides">
+    <rect id="safe" x="0" y="0" width="800" height="480" fill="none" stroke="#ffd43b" stroke-width="2"/>
+    <line id="shelf" x1="0" y1="480" x2="800" y2="480" stroke="#ffd43b" stroke-width="2"/>
+  </g>
+</svg>

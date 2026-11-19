@@ -21,6 +21,10 @@ What it holds:
             the painted pixels of every exported file; a card's safe area is inside the 1.91:1 crop;
 - cards:    one template; each motif in the motifs' line language, inside its box and standing on
             the shelf; the words inside their column; the line still readable at 400 px, title and mark at 320;
+- banners:  one template; each README banner's words inside their column and its motif on the shelf;
+            the mark and the title's capitals readable at 279 px, the line and the label at 823; the
+            light file is the dark file plus its ground; each file is what its row gives, byte for byte,
+            under the rule's weight;
 - brand:    TRADEMARKS.md is brand's, byte for byte; the submodule's address is brand's public
             one, https://github.com/kleidos-dev/brand.git;
 - licenses: every declaration is GPL-3.0-or-later (the artwork and the pack's data) or MIT (the
@@ -32,7 +36,8 @@ What it holds:
             secret, or brand/tools/deny-local.txt; CI fails without it, a local run warns);
             tools/check_metadata.py runs this rule alone;
 - public:   nothing private, no board drawing (the fronts are brand's copies, read through the
-            submodule), no registered-trademark sign.
+            submodule; the boards banner, svg/readme/boards/, draws them with their unlock screens as
+            inner PNGs, as the boards card does in pixels), no registered-trademark sign.
 """
 from __future__ import annotations
 
@@ -49,6 +54,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cards  # noqa: E402
 import export  # noqa: E402
 import pack  # noqa: E402
+import readme_banners  # noqa: E402
 import records  # noqa: E402
 import source  # noqa: E402
 from kleidos_brand import SVG_HEADER, mark, meta, public_tree, svg_rules, tokens  # noqa: E402
@@ -59,6 +65,8 @@ BRAND_URL = "https://github.com/kleidos-dev/brand.git"
 #: The project's contact and the supplier REUSE.toml names: the two addresses a file may hold.
 ALLOWED_EMAILS = frozenset({"mail@kleidos.dev", "jmrplens@kleidos.dev"})
 PICTURE_DIRS = ("png", "previews")
+#: The folder of generated pictures that draw the board fronts, screens embedded: the boards banner.
+BOARD_PICTURES = ("svg/readme/boards",)
 #: The share of the canvas an image of the mark alone must fill with its ring, at least.
 MARK_ALONE_FILL = 0.69
 
@@ -75,6 +83,7 @@ def sources(root: Path) -> list[Path]:
 
 def pack_findings(root: Path, data: dict[str, Any]) -> list[str]:
     found = cards.row_findings(data)
+    found += readme_banners.row_findings(data)
     listed: dict[str, str] = {}
     for image in pack.images(data):
         if not (root / image.source).is_file():
@@ -92,7 +101,7 @@ def pack_findings(root: Path, data: dict[str, Any]) -> list[str]:
     card_rule = data["rules"].get(data["cards"]["rule"])
     if card_rule is None or card_rule["upload_px"] != data["cards"]["px"] or card_rule["max_bytes"] > 1_000_000:
         found.append("pack.json: a card is drawn at its rule's size and weighs less than 1,000,000 bytes, GitHub's limit")
-    used = {image.source for image in pack.images(data)} | {Path(data["cards"]["template"])}
+    used = {image.source for image in pack.images(data)} | {Path(data["cards"]["template"]), readme_banners.template(data)}
     used |= {cards.motif_path(data, row.motif) for row in [*pack.rows(data), pack.template_row(data)]}
     for path in sources(root):
         if path not in used and path.parent != Path(data["cards"]["motifs"]):
@@ -154,6 +163,10 @@ def keep_findings(root: Path, collected: export.Collected) -> list[str]:
         found += cards.card_findings(root, built)
     template = cards.card(root, collected.data, pack.template_row(collected.data))
     found += cards.card_findings(root, template)
+    for built in collected.banners:
+        found += readme_banners.banner_findings(root, built)
+    for index in range(0, len(collected.banners), 2):
+        found += readme_banners.pair_findings(collected.banners[index:index + 2])
     for path, drawing in collected.drawings.items():
         if (root / path).is_file():
             found += source.painted_findings(path.as_posix(), (root / path).read_bytes(), drawing)
@@ -226,7 +239,8 @@ def findings(root: Path = pack.ROOT) -> list[str]:
     found += brand_findings(root)
     found += public_tree.license_findings(root, files, ALLOWED_LICENSES)
     found += public_tree.font_findings(root, files, {})
-    found += public_tree.findings(root, files, PICTURE_DIRS, ALLOWED_EMAILS)
+    found += [line for line in public_tree.findings(root, files, PICTURE_DIRS, ALLOWED_EMAILS, board_dirs=BOARD_PICTURES)
+              if not (line.endswith(": embeds a picture") and line.startswith(tuple(f"{folder}/" for folder in BOARD_PICTURES)))]
     return list(dict.fromkeys(found))
 
 
