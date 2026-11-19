@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
   <title>Card motif "checklist": a sheet with three rows, each a check and a bar</title>
+  <desc>A line drawing of a sheet with three rows, each a check and a bar, the motif of the card of the agents repository.</desc>
   <g id="ground">
     <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
   </g>

@@ -43,6 +43,7 @@ BRAND_INPUTS = (
     Path("tokens/tokens.json"),
     Path("fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf"),
     Path("fonts/mona-sans/MonaSansMonoVF[wght].ttf"),
+    Path("tools/kleidos_brand/meta.py"),  # the metadata profile every picture carries
 )
 
 

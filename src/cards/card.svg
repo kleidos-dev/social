@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1280" width="2560" height="1280">
   <title>Kleidos repository card, the template: the lockup, a label, the repository's name, one line, and a motif standing on the shelf</title>
+  <desc>The Kleidos repository card template: the horizontal logo, a label, the repository's name, one line about it, and a motif standing on a ruled shelf.</desc>
   <g id="ground">
     <rect x="0" y="0" width="2560" height="1280" fill="#0a0c0f"/>
   </g>

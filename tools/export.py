@@ -16,7 +16,8 @@
 Everything is drawn from the sources under src/, the rows of pack.json and the
 brand submodule: its mark, its lockup, its tokens and its fonts. Chromium
 draws, through Playwright, from SVG that holds outlines only; Pillow encodes
-again from the pixels alone. The exact comparison belongs to the machine that
+again from the pixels alone, and each file then carries brand's metadata
+profile, written from its record (records.py). The exact comparison belongs to the machine that
 exported; the static check and the tolerant one run anywhere, and CI runs both.
 """
 from __future__ import annotations
@@ -35,8 +36,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cards  # noqa: E402
 import pack  # noqa: E402
 import previews  # noqa: E402
+import records  # noqa: E402
 import source  # noqa: E402
-from kleidos_brand import boards, mark, png, raster, record  # noqa: E402
+from kleidos_brand import boards, mark, meta, png, raster, record  # noqa: E402
 
 ROOT = pack.ROOT
 #: The share of pixels that may differ by more than a shade under another browser.
@@ -58,6 +60,7 @@ class Picture:
     draw: Callable[[raster.Browser, dict[str, bytes]], bytes]
     what: str
     kind: str  # "image", "card" or "preview"
+    meta: Any  # the metadata it carries (records.py)
     limit: int | None = None
     rule: str | None = None
 
@@ -79,17 +82,22 @@ def brand_inputs() -> tuple[Path, ...]:
     return tuple(pack.BRAND / path for path in pack.BRAND_INPUTS)
 
 
-def fit_under(image: Any, limit: int | None) -> bytes:
-    """Return *image* as a PNG under *limit* bytes: as it is, or with a 256-color palette, never as a JPEG."""
+def fit_under(image: Any, limit: int | None, described: Any) -> bytes:
+    """Return *image* as a PNG under *limit* bytes, its metadata included: as it is, or with a 256-color palette, never as a JPEG."""
     from PIL import Image  # noqa: PLC0415
 
-    data = png.encode(image)
+    data = png.encode(image, described)
     if limit is None or len(data) < limit:
         return data
-    reduced = png.encode(image.quantize(colors=256, dither=Image.Dither.NONE))
+    reduced = png.encode(image.quantize(colors=256, dither=Image.Dither.NONE), described)
     if len(reduced) >= limit:
         raise ValueError(f"the picture weighs {len(data):,} bytes, {len(reduced):,} with a 256-color palette; the limit is under {limit:,}")
     return reduced
+
+
+def drawn_from(svg: str, described: Any) -> str:
+    """Return the digest of what a picture is drawn from: its outlined SVG, and the metadata it carries under brand's profile."""
+    return record.sha256("\n".join((svg, meta.META_PROFILE, repr(described))).encode())
 
 
 def board_inputs(drawing: source.Drawing) -> tuple[Path, ...]:
@@ -97,11 +105,11 @@ def board_inputs(drawing: source.Drawing) -> tuple[Path, ...]:
     return tuple(pack.BRAND / path for path in boards.inputs(pack.brand_root())) if drawing.fronts else ()
 
 
-def _drawer(drawing: source.Drawing, size: tuple[int, int], limit: int | None, name: str) -> Callable[[raster.Browser, dict[str, bytes]], bytes]:
+def _drawer(drawing: source.Drawing, size: tuple[int, int], limit: int | None, name: str, described: Any) -> Callable[[raster.Browser, dict[str, bytes]], bytes]:
     def draw(browser: raster.Browser, _: dict[str, bytes]) -> bytes:
         image = png.clean(browser.draw(drawing.svg, size, name), flatten=drawing.ground)
         image = boards.paste_glass(image, drawing.fronts, pack.brand_root(), size[0] / drawing.size[0])
-        return fit_under(image, limit)
+        return fit_under(image, limit, described)
 
     return draw
 
@@ -130,12 +138,13 @@ def collect(root: Path = ROOT) -> Collected:
         out.sources[image.source] = drawing
         for output in image.outputs:
             limit = pack.limit(data, output.rule)
+            described = records.image(root, data, image.source, output.file, output.rule, bool(drawing.fronts))
             out.drawings[output.file] = drawing
             if image.mark_alone is not None:
                 out.references[output.file] = mark_alone_reference(root, drawing, image.mark_alone)
             out.pictures.append(Picture(
-                output.file, output.px, record.sha256(drawing.svg.encode()), (image.source, pack.PACK_JSON, *brand_inputs(), *board_inputs(drawing)),
-                _drawer(drawing, output.px, limit, output.file.stem), image.what, "image", limit, output.rule))
+                output.file, output.px, drawn_from(drawing.svg, described), (image.source, pack.PACK_JSON, *brand_inputs(), *board_inputs(drawing)),
+                _drawer(drawing, output.px, limit, output.file.stem, described), image.what, "image", described, limit, output.rule))
 
     # --- The repository cards ------------------------------------------------------------
     size = pack.card_size(data)
@@ -144,18 +153,22 @@ def collect(root: Path = ROOT) -> Collected:
         assert built.row.file is not None
         out.cards.append(built)
         out.drawings[built.row.file] = built.drawing
+        described = records.card(root, data, built.row.repo, built.row.line, built.row.file, bool(built.drawing.fronts))
         out.pictures.append(Picture(
-            built.row.file, size, record.sha256(built.drawing.svg.encode()), (*built.inputs, *brand_inputs(), *board_inputs(built.drawing)),
-            _drawer(built.drawing, size, pack.limit(data, rule), built.row.file.stem),
-            f"the card of {data['cards']['owner']}/{built.row.repo}", "card", pack.limit(data, rule), rule))
+            built.row.file, size, drawn_from(built.drawing.svg, described), (*built.inputs, *brand_inputs(), *board_inputs(built.drawing)),
+            _drawer(built.drawing, size, pack.limit(data, rule), built.row.file.stem, described),
+            f"the card of {data['cards']['owner']}/{built.row.repo}", "card", described, pack.limit(data, rule), rule))
 
     # --- The previews --------------------------------------------------------------------
     shown = [picture for picture in out.pictures]
     for spec in data["previews"]:
-        sheet = previews.Sheet(root, data, spec, shown, cards.card(root, data, pack.template_row(data)))
+        template = cards.card(root, data, pack.template_row(data))
+        sheet = previews.Sheet(root, data, spec, shown, template)
+        boards_shown = any(bool(out.drawings[picture.path].fronts) for picture in sheet.shown if picture.path in out.drawings)
+        sheet.record = records.preview(root, spec, boards_shown or (sheet.kind == "cards" and bool(template.drawing.fronts)))
         out.pictures.append(Picture(
-            Path(spec["file"]), (0, 0), sheet.digest, (pack.PACK_JSON, *sheet.inputs, *brand_inputs()),
-            sheet.draw, spec["title"], "preview"))
+            Path(spec["file"]), (0, 0), drawn_from(sheet.digest, sheet.record), (pack.PACK_JSON, *sheet.inputs, *brand_inputs()),
+            sheet.draw, spec["title"], "preview", sheet.record))
     return out
 
 
@@ -304,7 +317,7 @@ def static_findings(root: Path = ROOT) -> list[str]:
             found.append(f"{name}: missing; run tools/export.py")
             continue
         data = path.read_bytes()
-        found += png.findings(name, data, picture.size if picture.kind != "preview" else None, picture.limit)
+        found += png.findings(name, data, picture.size if picture.kind != "preview" else None, picture.limit, picture.meta)
         if entry is None:
             found.append(f"{name}: exports.json has no record of it; run tools/export.py")
             continue
@@ -405,7 +418,7 @@ def thumbnail(root: Path, lines: list[str], art: Path | None, browser: raster.Br
         share = min(width / picture.width, height / picture.height)
         fitted = picture.resize((round(picture.width * share), round(picture.height * share)), Image.Resampling.LANCZOS)
         image.paste(fitted, (int(room[0]) + (width - fitted.width) // 2, int(room[1]) + (height - fitted.height) // 2), fitted)
-    return fit_under(image, pack.limit(pack.load(root), "youtube-thumbnail"))
+    return fit_under(image, pack.limit(pack.load(root), "youtube-thumbnail"), records.thumbnail(root, lines))
 
 
 def slug(lines: list[str]) -> str:

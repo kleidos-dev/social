@@ -6,11 +6,14 @@ import io
 import json
 import random
 import shutil
+import zlib
 from pathlib import Path
+
+import pytest
 
 import check
 import pack
-from kleidos_brand import SVG_HEADER
+from kleidos_brand import SVG_HEADER, meta
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -225,16 +228,100 @@ def test_a_changed_picture_makes_its_preview_stale(tree: Path) -> None:
     assert found(tree, "previews/cards.png", "stale: png/github/boards.png changed")
 
 
-def test_a_picture_with_a_text_chunk_is_refused(tree: Path) -> None:
-    from PIL import Image
-    from PIL.PngImagePlugin import PngInfo
+def _chunk(name: str, body: bytes) -> bytes:
+    kind = name.encode("latin-1")
+    return len(body).to_bytes(4, "big") + kind + body + zlib.crc32(kind + body).to_bytes(4, "big")
 
-    path = tree / "png/youtube/watermark.png"
-    extra = PngInfo()
-    extra.add_text("Software", "an editor")
-    with Image.open(path) as opened:
-        opened.save(path, "PNG", pnginfo=extra)
-    assert found(tree, "png/youtube/watermark.png", "holds tEXt")
+
+def _plant(path: Path, name: str, body: bytes) -> None:
+    """Put one chunk into a PNG right before its pixels."""
+    chunks = meta.png_chunks_of(path.read_bytes())
+    first = next(index for index, (chunk, _) in enumerate(chunks) if chunk == "IDAT")
+    chunks.insert(first, (name, body))
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(chunk, data) for chunk, data in chunks))
+
+
+def _replace_text(path: Path, keyword: str, value: str) -> None:
+    chunks = [(name, f"{keyword}\0{value}".encode("latin-1") if name == "tEXt" and body.startswith(keyword.encode() + b"\0") else body)
+              for name, body in meta.png_chunks_of(path.read_bytes())]
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(name, body) for name, body in chunks))
+
+
+def test_a_picture_with_a_text_chunk_outside_the_profile_is_refused(tree: Path) -> None:
+    _plant(tree / "png/youtube/watermark.png", "tEXt", b"Software\0an editor")
+    assert found(tree, "png/youtube/watermark.png", "M005", "Software")
+
+
+def test_a_picture_with_a_time_compressed_text_or_exif_is_refused(tree: Path) -> None:
+    _plant(tree / "png/youtube/watermark.png", "tIME", bytes([7, 234, 11, 18, 12, 0, 0]))
+    _plant(tree / "png/github/brand.png", "zTXt", b"Comment\0\0" + zlib.compress(b"x"))
+    _plant(tree / "png/github/social.png", "eXIf", b"MM\0*\0\0\0\x08\0\0")
+    assert found(tree, "png/youtube/watermark.png", "M005", "tIME")
+    assert found(tree, "png/github/brand.png", "M005", "zTXt")
+    assert found(tree, "png/github/social.png", "M005", "eXIf")
+
+
+def test_a_picture_whose_metadata_is_not_its_record_s_is_refused(tree: Path) -> None:
+    _replace_text(tree / "png/github/agents.png", "Copyright", "© 2026 Someone else. MIT.")
+    assert found(tree, "png/github/agents.png", "M002", "'Copyright'")
+
+
+def test_a_picture_without_metadata_is_refused(tree: Path) -> None:
+    path = tree / "png/makertube/banner.png"
+    path.write_bytes(meta.png_bare(path.read_bytes()))
+    assert found(tree, "png/makertube/banner.png", "M001", "carries no metadata")
+
+
+def test_metadata_out_of_order_is_refused(tree: Path) -> None:
+    path = tree / "png/youtube/avatar.png"
+    chunks = meta.png_chunks_of(path.read_bytes())
+    texts = [chunk for chunk in chunks if chunk[0] in ("tEXt", "iTXt")]
+    rest = [chunk for chunk in chunks if chunk[0] not in ("tEXt", "iTXt")]
+    reordered = [*rest[:-1], *texts, rest[-1]]  # after the pixels, before IEND
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(name, body) for name, body in reordered))
+    assert found(tree, "png/youtube/avatar.png", "M006")
+
+
+def test_a_private_value_in_a_record_is_refused(tree: Path) -> None:
+    edit(tree / "pack.json", "on a dark and on a light page", "on a dark and on a light page at localhost")
+    assert found(tree, "previews/avatars.png", "M004", "a private host")
+
+
+def test_ci_without_the_private_deny_list_is_refused(tree: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.delenv(meta.DENY_ENV, raising=False)
+    monkeypatch.setattr(meta, "DENY_LOCAL", tree / "no-deny-list.txt")
+    assert found(tree, "M004", "private deny-list is not loaded")
+
+
+def test_an_identity_pattern_in_a_record_is_refused(tree: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv(meta.DENY_ENV, "# a comment\nzz-private-handle\n")
+    edit(tree / "pack.json", "on a dark and on a light page", "on a dark and on a light page of zz-private-handle")
+    findings = check.findings(tree)
+    assert any("previews/avatars.png: M004" in line and "identity pattern" in line for line in findings), findings
+    assert not any("zz-private-handle" in line for line in findings if "M004" in line), "an identity match is named"
+
+
+def test_the_metadata_checker_alone_passes_a_clean_tree_and_names_each_defect(tree: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    import check_metadata  # noqa: PLC0415
+
+    assert check_metadata.main(["--root", str(tree)]) == 0
+    path = tree / "png/makertube/banner.png"
+    path.write_bytes(meta.png_bare(path.read_bytes()))
+    shutil.copyfile(tree / "png/youtube/avatar.png", tree / "png/youtube/stray.png")
+    capsys.readouterr()
+    assert check_metadata.main(["--root", str(tree), "--json"]) == 1
+    rows = json.loads(capsys.readouterr().out)
+    assert {"path": "png/makertube/banner.png", "rule": "M001", "message": "carries no metadata; run tools/build.py"} in rows, rows
+    assert any(row["path"] == "png/youtube/stray.png" and row["rule"] == "M008" for row in rows), rows
+    assert check_metadata.main(["--root", str(tree), "png/github/agents.png"]) == 0
+
+
+def test_a_license_that_reuse_does_not_give_is_refused(tree: Path) -> None:
+    edit(tree / "REUSE.toml", 'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"\n'
+         'SPDX-License-Identifier = "GPL-3.0-or-later"', 'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"\n'
+         'SPDX-License-Identifier = "MIT"')
+    assert found(tree, "GPL-3.0-or-later is not in the expression 'MIT'")
 
 
 # --- Brand, licenses, the public tree ----------------------------------------------------

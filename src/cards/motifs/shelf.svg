@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
   <title>Card motif "shelf": the nine boards Kleidos runs on, at one true scale, on two shelves, the lower one the card's, each on its unlock screen; the exporter draws brand's board fronts in place of the box</title>
+  <desc>The nine boards Kleidos runs on, drawn at one true scale on two shelves, each showing its unlock screen: the motif of the card of the boards repository.</desc>
   <g id="ground">
     <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
   </g>

@@ -20,7 +20,7 @@ No font file is in this repository. Every word in an image here is glyph outline
 
 ## The name and the mark
 
-Kleidos is not a registered trademark. Under section 7(e) of the GNU GPL version 3, the license of this repository grants no rights under trademark law in the name "Kleidos" or in the Kleidos mark. Under section 7(c), a modified version of a file under the GPL here must be marked in reasonable ways as different from the original, and must not misrepresent the origin of the material; a file passed on unchanged needs no mark. [`TRADEMARKS.md`](TRADEMARKS.md) holds both terms and what the project asks of those who use its name. The PNG files carry no text of their own: this notice and `TRADEMARKS.md` speak for them.
+Kleidos is not a registered trademark. Under section 7(e) of the GNU GPL version 3, the license of this repository grants no rights under trademark law in the name "Kleidos" or in the Kleidos mark. Under section 7(c), a modified version of a file under the GPL here must be marked in reasonable ways as different from the original, and must not misrepresent the origin of the material; a file passed on unchanged needs no mark. [`TRADEMARKS.md`](TRADEMARKS.md) holds both terms and what the project asks of those who use its name. Each PNG file carries the same facts in its own metadata (its creator, its copyright line, GPL-3.0-or-later with the license's address, the credits, the trademark notes and the address of `TRADEMARKS.md`), so they travel with the file; this notice and `TRADEMARKS.md` remain the full statement.
 
 ## The commit-message gate
 

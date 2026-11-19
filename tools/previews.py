@@ -163,8 +163,8 @@ class Layout:
             y += LEDE_SIZE + 8
         return y + 2
 
-    def render(self, browser: raster.Browser, brand: Path, name: str) -> bytes:
-        """Return the sheet as a PNG."""
+    def render(self, browser: raster.Browser, brand: Path, name: str, described: Any) -> bytes:
+        """Return the sheet as a PNG that carries *described*, its metadata."""
         height = self.height + MARGIN
         ground = self.values["social.ground"]
         body = "\n".join([f'<rect x="0" y="0" width="{self.width}" height="{height}" fill="{ground}"/>', *self.tiles, *self.texts])
@@ -174,7 +174,7 @@ class Layout:
         sheet = png.clean(browser.draw(ET.tostring(tree, encoding="unicode"), (self.width, height), name), flatten=ground)
         for x, y, image in self.plates:
             sheet.paste(image, (x, y), image)
-        return png.encode(sheet)
+        return png.encode(sheet, described)
 
 
 class Sheet:
@@ -186,6 +186,8 @@ class Sheet:
         self.spec = spec
         self.kind = spec["kind"]
         self.template = template
+        #: The metadata the sheet carries (records.preview), set by the exporter.
+        self.record: Any = None
         if self.kind == "contact-sheet":
             self.shown = list(shown)
         elif self.kind == "avatars":
@@ -214,7 +216,7 @@ class Sheet:
         """Return the preview, drawn from the pictures in *drawn* or, failing that, from the tree's."""
         values = tokens.resolve(tokens.load(pack.brand_root(self.root)))
         layout = getattr(self, f"_{self.kind.replace('-', '_')}")(browser, drawn, values)
-        return layout.render(browser, pack.brand_root(self.root), Path(self.spec["file"]).stem)
+        return layout.render(browser, pack.brand_root(self.root), Path(self.spec["file"]).stem, self.record)
 
     # --- The sheets ----------------------------------------------------------------------
 

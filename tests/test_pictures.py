@@ -10,7 +10,8 @@ from pathlib import Path
 import export
 import pack
 import pytest
-from kleidos_brand import png
+import records
+from kleidos_brand import meta, png
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,6 +53,40 @@ def test_every_card_weighs_less_than_github_accepts() -> None:
 def test_the_mark_alone_is_the_first_pack_s_pixel_for_pixel() -> None:
     for name, digest in FIRST_PACK.items():
         assert _pixels(ROOT / name) == digest, name
+
+
+def _texts(path: Path) -> dict[str, str]:
+    chunks = meta.png_chunks_of(path.read_bytes())
+    return dict(body.decode("latin-1").split("\0", 1) for name, body in chunks if name == "tEXt")
+
+
+def test_every_picture_says_what_it_is_who_made_it_and_under_which_license() -> None:
+    for picture in export.collect(ROOT).pictures:
+        data = (ROOT / picture.path).read_bytes()
+        names = png.chunk_names(data)
+        assert names.index("iTXt") < names.index("IDAT"), picture.path  # before the pixels, for a reader that streams
+        texts = _texts(ROOT / picture.path)
+        assert list(texts) == ["Title", "Author", "Description", "Copyright", "License", "Comment"], picture.path
+        assert texts["Author"] == "José M. Requena Plens"
+        assert texts["Copyright"] == "© 2026 José M. Requena Plens. GPL-3.0-or-later."
+        assert texts["License"] == "GPL-3.0-or-later https://spdx.org/licenses/GPL-3.0-or-later.html"
+        assert texts["Comment"].endswith(f"https://github.com/kleidos-dev/social/blob/main/{picture.path.as_posix()}")
+        assert not {"tIME", "zTXt", "eXIf", "sRGB", "iCCP"} & set(names), picture.path  # no time, no EXIF, no new color tag
+        packet = next(body for name, body in meta.png_chunks_of(data) if name == "iTXt").decode("utf-8")
+        assert "digitalsourcetype/digitalCreation" in packet and "xmp:CreateDate" not in packet
+
+
+def test_a_picture_of_the_boards_credits_them_and_names_their_makers_marks() -> None:
+    def terms(name: str) -> str:
+        data = (ROOT / name).read_bytes()
+        return next(body for chunk, body in meta.png_chunks_of(data) if chunk == "iTXt").decode("utf-8")
+
+    for name in ("png/youtube/banner.png", "png/github/boards.png", "previews/cards.png"):
+        assert "kleidos-dev/boards front drawings" in terms(name) and "LILYGO and T-Deck are trademarks" in terms(name), name
+    for name in ("png/youtube/avatar.png", "png/github/brand.png"):
+        assert "front drawings" not in terms(name) and "M5Stack" not in terms(name), name
+    for name in ("png/youtube/avatar.png", "png/github/boards.png"):
+        assert "Mona Sans" in terms(name) and "press permission" not in terms(name), name
 
 
 def test_the_watermark_is_transparent_and_the_avatar_is_not() -> None:
@@ -108,7 +143,7 @@ def test_a_video_s_thumbnail_is_drawn_from_the_template(chromium) -> None:
     data = export.thumbnail(ROOT, ["One sign-in,", "uncut"], ROOT / "png/youtube/avatar.png", chromium)
     assert png.size(data) == (3840, 2160)
     assert len(data) < pack.limit(pack.load(ROOT), "youtube-thumbnail")
-    assert png.findings("thumbnail", data) == []
+    assert png.findings("thumbnail", data, meta=records.thumbnail(ROOT, ["One sign-in,", "uncut"])) == []
     with Image.open(io.BytesIO(data)) as opened:
         assert opened.convert("RGB").getpixel((2933, 1020)) != (10, 12, 15)  # the picture, in its room
 
