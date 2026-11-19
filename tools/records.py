@@ -109,3 +109,16 @@ def thumbnail(root: Path, lines: list[str]) -> Any:
     return build(root, Path("src/youtube/thumbnail.svg"), named if len(named.encode()) <= 64 else title,
                  f"The thumbnail of the Kleidos video \"{title}\": the horizontal logo and the video's title.",
                  ("YouTube", "video thumbnail"), False)
+
+
+def readme_banner(root: Path, data: dict[str, Any], row: Any, theme: str, file: Path, boards: bool) -> Any:
+    """Return the record of a README banner: its repository, its label, its line and its theme.
+
+    A repository's copy is the master's bytes, so its identifier names the master in this repository,
+    the one public address every copy has (brand does the same with the board fronts it copies).
+    """
+    owner = data["cards"]["owner"]
+    description = (f"The README banner of {owner}/{row.repo}: the Kleidos logo, the label \"{row.label}\","
+                   f" the name \"{row.repo}\" and the line \"{row.line}\"")
+    return build(root, file, f"{owner}/{row.repo} README banner, {theme} theme", description,
+                 (f"{owner}/{row.repo}", "GitHub", "README banner"), boards, f"Kleidos {row.label}: {row.line}")

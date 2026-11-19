@@ -144,12 +144,13 @@ def motif_findings(root: Path, data: dict[str, Any]) -> list[str]:
     found = []
     folder = root / data["cards"]["motifs"]
     used = {row.motif for row in [*pack.rows(data), pack.template_row(data)]}
+    used |= {entry["motif"] for entry in data.get("readme_banners", {}).get("repos", []) if entry.get("motif")}
     for name in sorted(used - {path.stem for path in folder.glob("*.svg")}):
-        found.append(f"pack.json: a card asks for the motif {name!r}, and {data['cards']['motifs']}/{name}.svg does not exist")
+        found.append(f"pack.json: a card or a banner asks for the motif {name!r}, and {data['cards']['motifs']}/{name}.svg does not exist")
     for path in sorted(folder.glob("*.svg")):
         name = path.relative_to(root).as_posix()
         if path.stem not in used:
-            found.append(f"{name}: no card uses this motif")
+            found.append(f"{name}: no card and no banner uses this motif")
         try:
             tree = source.parse(path)
             holder = source.by_id(tree).get("motif")

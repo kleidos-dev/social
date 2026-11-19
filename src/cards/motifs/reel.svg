@@ -1,0 +1,44 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <title>Card motif "reel": a film reel and its strip running along the shelf</title>
+  <desc>A line drawing of a film reel with its five windows, and the strip that runs out of it along the shelf, the motif of the videos repository.</desc>
+  <g id="ground">
+    <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
+  </g>
+  <g id="content">
+    <g id="motif" transform="translate(0 0)">
+      <rect x="230" y="400" width="564" height="74" rx="12" fill="#0f3460" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="300" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="300" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="364" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="364" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="428" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="428" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="492" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="492" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="556" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="556" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="620" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="620" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="684" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="684" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="748" y="414" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <rect x="748" y="446" width="28" height="16" rx="4" fill="#0a0c0f"/>
+      <circle cx="214" cy="286" r="188" fill="#0f3460" stroke="#00d2ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="214" cy="182" r="42" fill="#0a0c0f" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="115.1" cy="253.9" r="42" fill="#0a0c0f" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="152.9" cy="370.1" r="42" fill="#0a0c0f" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="275.1" cy="370.1" r="42" fill="#0a0c0f" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="312.9" cy="253.9" r="42" fill="#0a0c0f" stroke="#00d2ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="214" cy="286" r="22" fill="#00d2ff"/>
+    </g>
+  </g>
+  <g id="guides">
+    <rect id="safe" x="0" y="0" width="800" height="480" fill="none" stroke="#ffd43b" stroke-width="2"/>
+    <line id="shelf" x1="0" y1="480" x2="800" y2="480" stroke="#ffd43b" stroke-width="2"/>
+  </g>
+</svg>
