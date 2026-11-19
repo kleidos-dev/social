@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
   <title>Kleidos avatar: the mark on the stage ground, its ring inside the square every circle crop keeps</title>
+  <desc>The Kleidos mark, a keyhole inside a ring, centered on the dark stage ground and sized so that every circle crop keeps the whole ring. Kleidos is free firmware that turns an ESP32 board into a hardware password manager.</desc>
   <g id="ground">
     <rect x="0" y="0" width="1000" height="1000" fill="#0a0c0f"/>
   </g>

@@ -10,7 +10,9 @@ import cards
 import export
 import pack
 import pytest
+import records
 import source
+from kleidos_brand import meta
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = pack.load(ROOT)
@@ -77,6 +79,10 @@ def test_an_unknown_motif_is_refused() -> None:
         cards.card(ROOT, DATA, pack.Row("example", "Sample", "a", ("a",), "nothing", None))
 
 
+def _described() -> meta.MediaMeta:
+    return records.build(ROOT, Path("png/github/kleidos.png"), "A test picture", "A picture a test draws.", (), False)
+
+
 def test_a_heavy_picture_falls_back_to_a_palette() -> None:
     from PIL import Image
 
@@ -84,12 +90,14 @@ def test_a_heavy_picture_falls_back_to_a_palette() -> None:
     rng = random.Random(3)
     image = Image.new("RGB", (640, 320))
     image.putdata([(10 + rng.randrange(4), 12 + rng.randrange(4), 15 + rng.randrange(4)) for _ in range(640 * 320)])
-    plain = export.fit_under(image, None)
+    described = _described()
+    plain = export.fit_under(image, None, described)
     limit = len(plain) - 1
-    reduced = export.fit_under(image, limit)
-    assert len(reduced) < limit
+    reduced = export.fit_under(image, limit, described)
+    assert len(reduced) < limit  # the metadata counted in the weight
     with Image.open(io.BytesIO(reduced)) as opened:
         assert opened.mode == "P" and opened.format == "PNG"
+    assert meta.png_findings("plain", plain, described) == meta.png_findings("reduced", reduced, described) == []
 
 
 def test_a_picture_too_heavy_even_with_a_palette_fails() -> None:
@@ -97,7 +105,7 @@ def test_a_picture_too_heavy_even_with_a_palette_fails() -> None:
 
     noise = Image.frombytes("RGB", (256, 256), random.Random(5).randbytes(256 * 256 * 3))
     with pytest.raises(ValueError, match="the limit is under"):
-        export.fit_under(noise, 1000)
+        export.fit_under(noise, 1000, _described())
 
 
 def test_the_boards_card_and_the_banner_show_all_nine_boards_at_one_scale() -> None:

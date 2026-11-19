@@ -37,6 +37,8 @@ SVG_NS = svgtext.SVG_NS
 PLACED = re.compile(r"translate\((-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)\)(?: scale\((\d+(?:\.\d+)?)\))?")
 
 Box = tuple[float, float, float, float]  # left, top, right, bottom
+#: What an SVG says about itself rather than draws.
+DESCRIPTIVE = frozenset({"title", "desc", "metadata"})
 
 
 def tag(element: ET.Element) -> str:
@@ -125,9 +127,13 @@ def ink_box(element: ET.Element) -> Box | None:
 
 
 def lockup_children(brand: Path, kind: str = "horizontal") -> tuple[list[ET.Element], logo.Logo]:
-    """Return the shapes of brand's lockup for a dark ground, and the logo file they come from."""
+    """Return the shapes of brand's lockup for a dark ground, and the logo file they come from.
+
+    The logo file's own title, description and metadata describe that file, not a lockup pasted
+    into a picture, so they are left behind.
+    """
     chosen = next(item for item in logo.build(brand) if item.stem == f"kleidos-lockup-{kind}-for-dark")
-    return [child for child in ET.fromstring(chosen.svg) if tag(child) != "title"], chosen
+    return [child for child in ET.fromstring(chosen.svg) if tag(child) not in DESCRIPTIVE], chosen
 
 
 def _canon(elements: list[ET.Element]) -> list[Any]:

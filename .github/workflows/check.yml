@@ -14,6 +14,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # The identity patterns of the metadata deny-list stay out of the tree:
+    # tools/check.py reads them from this secret and fails when it is missing.
+    env:
+      KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
     steps:
       # The brand repository comes with it: the mark, the lockup, the tokens,
       # the fonts and the code that draws are all read from the submodule.

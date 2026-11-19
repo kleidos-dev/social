@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
   <title>Card motif "bubbles": two speech bubbles</title>
+  <desc>A line drawing of two speech bubbles, the motif of the card of the organization's community repository.</desc>
   <g id="ground">
     <rect x="0" y="0" width="800" height="480" fill="#0a0c0f"/>
   </g>

@@ -25,6 +25,12 @@ What it holds:
             one, https://github.com/kleidos-dev/brand.git;
 - licenses: every declaration is GPL-3.0-or-later (the artwork and the pack's data) or MIT (the
             tooling and the commit-message gate); no font file and no picture out of place;
+- metadata: every picture carries brand's metadata profile (kleidos_brand.meta), exactly as its
+            record in tools/records.py gives it, before its pixels; its license and holders are
+            REUSE.toml's for its path; no value holds an address, a path, a host, a machine's time or a
+            tool's name, nor an identity pattern of the private deny-list (the KLEIDOS_DENY_EXTRA
+            secret, or brand/tools/deny-local.txt; CI fails without it, a local run warns);
+            tools/check_metadata.py runs this rule alone;
 - public:   nothing private, no board drawing (the fronts are brand's copies, read through the
             submodule), no registered-trademark sign.
 """
@@ -32,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import configparser
+import os
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -42,8 +49,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cards  # noqa: E402
 import export  # noqa: E402
 import pack  # noqa: E402
+import records  # noqa: E402
 import source  # noqa: E402
-from kleidos_brand import SVG_HEADER, mark, public_tree, svg_rules, tokens  # noqa: E402
+from kleidos_brand import SVG_HEADER, mark, meta, public_tree, svg_rules, tokens  # noqa: E402
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT"})
 #: The submodule's one address: brand's public repository.
@@ -152,6 +160,34 @@ def keep_findings(root: Path, collected: export.Collected) -> list[str]:
     return found
 
 
+def metadata_findings(root: Path, collected: export.Collected, only: set[str] | None = None) -> list[str]:
+    """Return what in the pictures' metadata breaks the profile beyond its bytes (those are export.static_findings').
+
+    :param only: Check these pictures alone (as the repository names them).
+    """
+    found = []
+    identity, loaded = meta.identity_patterns()
+    if loaded == "missing":
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            found.append(f"tools/check.py: M004: the private deny-list is not loaded; set the {meta.DENY_ENV} secret")
+        else:
+            print(f"warning: no private deny-list ({meta.DENY_ENV}, or {meta.DENY_LOCAL.name} in brand/tools/); identity patterns not checked",
+                  file=sys.stderr)
+    for picture in collected.pictures:
+        name = picture.path.as_posix()
+        if only is not None and name not in only:
+            continue
+        spdx, holders = meta.reuse_truth(root, picture.path)
+        if (picture.meta.spdx, picture.meta.holders) != (spdx, holders):
+            found.append(f"{name}: M003: its record says {picture.meta.spdx} by {picture.meta.holders}; REUSE.toml says {spdx} by {holders}")
+        if picture.meta.own_license != records.OWN_LICENSE or records.OWN_LICENSE not in meta.spdx_ids(spdx):
+            found.append(f"{name}: M003: the license of the artwork, {records.OWN_LICENSE}, is not in REUSE.toml's expression {spdx!r}")
+        if picture.meta.digital_source_type != records.SOURCE_TYPE:
+            found.append(f"{name}: M012: a picture of this pack is a digitalCreation, not a {picture.meta.digital_source_type}")
+        found += meta.deny_findings(name, meta.xmp_values(picture.meta), identity)
+    return found
+
+
 def brand_findings(root: Path) -> list[str]:
     found = []
     ours, theirs = root / "TRADEMARKS.md", pack.brand_root(root) / "TRADEMARKS.md"
@@ -184,6 +220,7 @@ def findings(root: Path = pack.ROOT) -> list[str]:
         collected = export.collect(root)
         found += mark_alone_findings(collected)
         found += keep_findings(root, collected)
+        found += metadata_findings(root, collected)
     except (ValueError, KeyError, ET.ParseError, OSError, StopIteration) as error:
         found.append(f"the sources cannot be made ready, so nothing drawn was compared: {error}")
     found += brand_findings(root)

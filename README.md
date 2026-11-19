@@ -16,12 +16,12 @@ Only what is needed now: YouTube, MakerTube, and one card per repository. Anothe
 
 | File | Pixels | Weight | Where it goes | What it shows |
 | --- | --- | --- | --- | --- |
-| [`png/youtube/avatar.png`](png/youtube/avatar.png) | 800 x 800 | 31 kB | YouTube: YouTube Studio, Customization, Picture | the mark alone on the stage ground, its ring filling the square every circle crop keeps |
-| [`png/makertube/avatar.png`](png/makertube/avatar.png) | 1500 x 1500 | 64 kB | MakerTube (PeerTube): My library, Channels, Update, Avatar | the mark alone on the stage ground, its ring filling the square every circle crop keeps |
-| [`png/youtube/banner.png`](png/youtube/banner.png) | 2560 x 1440 | 184 kB | YouTube: YouTube Studio, Customization, Banner image | the lockup, the hero line and the nine boards at one scale on a shelf, each on its unlock screen, inside the area every device shows; ground everywhere else |
-| [`png/youtube/watermark.png`](png/youtube/watermark.png) | 600 x 600 | 27 kB | YouTube: YouTube Studio, Customization, Video watermark | the mark alone on transparency, for the corner of the player |
-| [`png/youtube/thumbnail.png`](png/youtube/thumbnail.png) | 3840 x 2160 | 170 kB | YouTube: with each video, in its details | the thumbnail template: the lockup, a title a video replaces, and room at the right for its picture |
-| [`png/makertube/banner.png`](png/makertube/banner.png) | 1920 x 317 | 32 kB | MakerTube (PeerTube): My library, Channels, Update, Banner | the lockup and the hero line on one row, inside the central band |
+| [`png/youtube/avatar.png`](png/youtube/avatar.png) | 800 x 800 | 35 kB | YouTube: YouTube Studio, Customization, Picture | the mark alone on the stage ground, its ring filling the square every circle crop keeps |
+| [`png/makertube/avatar.png`](png/makertube/avatar.png) | 1500 x 1500 | 68 kB | MakerTube (PeerTube): My library, Channels, Update, Avatar | the mark alone on the stage ground, its ring filling the square every circle crop keeps |
+| [`png/youtube/banner.png`](png/youtube/banner.png) | 2560 x 1440 | 189 kB | YouTube: YouTube Studio, Customization, Banner image | the lockup, the hero line and the nine boards at one scale on a shelf, each on its unlock screen, inside the area every device shows; ground everywhere else |
+| [`png/youtube/watermark.png`](png/youtube/watermark.png) | 600 x 600 | 30 kB | YouTube: YouTube Studio, Customization, Video watermark | the mark alone on transparency, for the corner of the player |
+| [`png/youtube/thumbnail.png`](png/youtube/thumbnail.png) | 3840 x 2160 | 174 kB | YouTube: with each video, in its details | the thumbnail template: the lockup, a title a video replaces, and room at the right for its picture |
+| [`png/makertube/banner.png`](png/makertube/banner.png) | 1920 x 317 | 36 kB | MakerTube (PeerTube): My library, Channels, Update, Banner | the lockup and the hero line on one row, inside the central band |
 
 <!-- END GENERATED: images -->
 
@@ -35,12 +35,12 @@ One card system for every repository, 2560 x 1280 (twice the size GitHub recomme
 
 | Repository | File | Weight | Label | Line | Motif |
 | --- | --- | --- | --- | --- | --- |
-| `kleidos-dev/kleidos` | [`png/github/kleidos.png`](png/github/kleidos.png) | 130 kB | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) |
-| `kleidos-dev/boards` | [`png/github/boards.png`](png/github/boards.png) | 258 kB | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) |
-| `kleidos-dev/brand` | [`png/github/brand.png`](png/github/brand.png) | 106 kB | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) |
-| `kleidos-dev/social` | [`png/github/social.png`](png/github/social.png) | 129 kB | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) |
-| `kleidos-dev/agents` | [`png/github/agents.png`](png/github/agents.png) | 118 kB | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) |
-| `kleidos-dev/.github` | [`png/github/dot-github.png`](png/github/dot-github.png) | 132 kB | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) |
+| `kleidos-dev/kleidos` | [`png/github/kleidos.png`](png/github/kleidos.png) | 134 kB | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) |
+| `kleidos-dev/boards` | [`png/github/boards.png`](png/github/boards.png) | 262 kB | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) |
+| `kleidos-dev/brand` | [`png/github/brand.png`](png/github/brand.png) | 109 kB | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) |
+| `kleidos-dev/social` | [`png/github/social.png`](png/github/social.png) | 133 kB | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) |
+| `kleidos-dev/agents` | [`png/github/agents.png`](png/github/agents.png) | 122 kB | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) |
+| `kleidos-dev/.github` | [`png/github/dot-github.png`](png/github/dot-github.png) | 136 kB | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) |
 
 <!-- END GENERATED: cards -->
 
@@ -123,11 +123,12 @@ python3 -m venv .venv
 .venv/bin/python tools/export.py --check --static    # what needs no browser
 .venv/bin/python tools/export.py --check --tolerant  # draw again under any browser, fail on gross drift
 .venv/bin/python tools/check.py                      # the tree's rules
+.venv/bin/python tools/check_metadata.py             # the metadata rule alone (--json, or some paths)
 .venv/bin/python -m pytest tests
 .venv/bin/reuse lint
 ```
 
-Python 3.15. The sources under `src/` are small SVG files with three layers (`ground`, `content`, `guides`) and live words in Mona Sans, so they open in any SVG editor that has brand's fonts. The exporter fills in the lockup from brand, turns the words into outlines, drops the guides, and has Playwright's Chromium draw the result, headless; Pillow encodes again from the pixels alone, so no file carries a text chunk. `exports.json` records the browser's version and, for each picture, its bytes and the bytes of everything it was drawn from, the brand files included: when the submodule moves and one of them changed, every picture is stale until it is exported again and looked at.
+Python 3.15. The sources under `src/` are small SVG files with three layers (`ground`, `content`, `guides`) and live words in Mona Sans, so they open in any SVG editor that has brand's fonts. The exporter fills in the lockup from brand, turns the words into outlines, drops the guides, and has Playwright's Chromium draw the result, headless; Pillow encodes again from the pixels alone, so no file carries a time or a trace of the machine that drew it. Each PNG then carries brand's metadata profile (`brand/tools/kleidos_brand/meta.py`), and nothing else, right before its pixels: a title, a description, the creator, the copyright line, the license with its address, where the file lives, the credits (Mona Sans, and the board drawings where the boards appear) and the trademark notes, as PNG text chunks and one XMP packet that indexers and tools such as exiftool read. `tools/records.py` builds each file's record from `pack.json` and the source's `<desc>`, with the license and holders that `REUSE.toml` gives for its path; it holds no date. `exports.json` records the browser's version and, for each picture, its bytes and the bytes of everything it was drawn from, the brand files included: when the submodule moves and one of them changed, every picture is stale until it is exported again and looked at.
 
 The pins (Pillow, Playwright, fontTools, HarfBuzz) are brand's, in `brand/requirements.txt`, so both repositories draw with one browser and one encoder. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
 
