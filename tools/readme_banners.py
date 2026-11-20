@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: MIT
 """The README banners: the repository card laid out again as a wide strip, one per repository.
 
-``src/readme/banner.svg`` is the banner system, the card's parts at the
-card's scale on a 2560 x 800 canvas: the lockup, a hairline and the label in
-capitals; the repository's name; its line in one or two lines; the ruled
-shelf; the repository's motif standing on it (``src/cards/motifs/``, as the
-card has it). A banner row (``readme_banners.repos`` in ``pack.json``) takes
+``src/readme/banner.svg`` is the banner system on a 2560 x 800 canvas: the
+lockup, a hairline and the label in capitals; under them the repository's
+line in one or two lines; the ruled shelf; the repository's motif standing
+on it (``src/cards/motifs/``, as the card has it). The label already names
+the repository beside the logo, so the banner does not set its name a second
+time. The text block and the motif's box are centred on the canvas's middle;
+a one-line row moves its text block down half a line so it stays centred. A banner row (``readme_banners.repos`` in ``pack.json``) takes
 its label, its line and its motif from the repository's card row and adds
 only the line's break into one or two lines; a repository with no card yet
 carries its own.
@@ -49,13 +51,16 @@ MAX_LINES = 2
 WIDE_PX = 823
 NARROW_PX = 279
 MIN_MARK_PX = 24.0  # the mark box on a phone: brand's floor on a dark ground
-MIN_TITLE_PX = 12.0  # the title's capitals on a phone
 MIN_LINE_PX = 9.0  # the line's x-height on a computer
 MIN_LABEL_PX = 12.0  # the label's capitals on a computer
+#: How far a text block or the motif's box may sit from the canvas's middle, in canvas units (4 px published).
+CENTRE_TOLERANCE = 8.0
+#: The parts of the text block, moved together when a row has fewer lines than the template.
+TEXT_BLOCK = ("lockup", "hairline", "label", *(f"line.{index}" for index in range(MAX_LINES)))
 #: The tile skin's corner, ``web.radius.r-xl`` (28 px at the published size).
 TILE_RADIUS = 56
 SKINS = ("page", "tile")
-#: A banner's copy lands where no TRADEMARKS.md is, so its header names the public one.
+#: A banner is shown in other repositories' READMEs, where no TRADEMARKS.md is, so its header names the public one.
 TRADEMARKS_URL = f"https://github.com/{sync.OWNER}/social/blob/main/TRADEMARKS.md"
 HEADER = SVG_HEADER.replace("version 3: TRADEMARKS.md", f"version 3: {TRADEMARKS_URL}")
 
@@ -122,7 +127,6 @@ def compose(root: Path, data: dict[str, Any], row: Row, skin: str) -> ET.Element
     tree = source.parse(root / template(data))
     named = source.by_id(tree)
     source.set_words(named["label"], row.label)
-    source.set_words(named["title"], row.repo)
     targets = [named[f"line.{index}"] for index in range(MAX_LINES)]
     if not 1 <= len(row.lines) <= len(targets):
         raise ValueError(f"the banner of {row.repo}: its line has {len(row.lines)} lines and a banner has room for one or {len(targets)}")
@@ -131,6 +135,8 @@ def compose(root: Path, data: dict[str, Any], row: Row, skin: str) -> ET.Element
             source.set_words(target, row.lines[index])
         else:
             source.remove(tree, target)
+    pitch = float(named["line.1"].get("y", "0")) - float(named["line.0"].get("y", "0"))
+    _move_down(named, pitch * (MAX_LINES - len(row.lines)) / 2)
     holder = named["motif"]
     for child in list(holder):
         holder.remove(child)
@@ -142,6 +148,21 @@ def compose(root: Path, data: dict[str, Any], row: Row, skin: str) -> ET.Element
         for rect in ground:
             rect.set("rx", str(TILE_RADIUS))
     return tree
+
+
+def _move_down(named: dict[str, ET.Element], dy: float) -> None:
+    """Move the text block's parts down by *dy*: the lockup's translation, the hairline's ends, the words' baselines."""
+    if not dy:
+        return
+    for name in TEXT_BLOCK:
+        element = named[name]
+        if name == "lockup":
+            x, y, scale = source.placement(element)
+            element.set("transform", f"translate({_number(x)} {_number(y + dy)}) scale({_number(scale)})")
+        else:
+            for key in ("y", "y1", "y2"):
+                if element.get(key) is not None:
+                    element.set(key, _number(float(element.get(key, "0")) + dy))
 
 
 def screens(root: Path, drawing: source.Drawing) -> list[ET.Element]:
@@ -210,7 +231,7 @@ def row_findings(data: dict[str, Any]) -> list[str]:
         if repo in seen:
             found.append(f"pack.json: the repository {repo} is given two banners")
         seen.add(repo)
-        if entry.get("mode", "copy") not in sync.MODES:
+        if entry.get("mode", "raw") not in sync.MODES:
             found.append(f"pack.json: the banner of {repo} has the mode {entry.get('mode')!r}; a banner's mode is {', '.join(sync.MODES)}")
         if repo in card_rows:
             repeated = [key for key in ("label", "line", "motif") if key in entry]
@@ -231,8 +252,41 @@ def row_findings(data: dict[str, Any]) -> list[str]:
     return found
 
 
+def consumer_findings(root: Path, data: dict[str, Any]) -> list[str]:
+    """Return what breaks the public contract: a README listed as reading a banner that is not here, or a banner no README reads.
+
+    Every README outside this repository reads ``svg/readme/<name>/banner-{dark,light}.svg``
+    on ``main`` by its absolute address, so those paths may never move or go
+    while a consumer in ``pack.json`` still names them.
+    """
+    found = []
+    listed = sync.consumers(data)
+    by_repo = {entry["repo"]: entry for entry in sync.rows(data)}
+    seen: set[str] = set()
+    for consumer in listed:
+        repository, banner = consumer.get("repository", ""), consumer.get("banner", "")
+        if repository.lower() in seen:
+            found.append(f"pack.json: the consumer {repository} is listed twice")
+        seen.add(repository.lower())
+        entry = by_repo.get(banner)
+        if entry is None:
+            found.append(f"pack.json: the README of {repository} reads the banner {banner!r}, and no banner row has that name")
+            continue
+        if entry["mode"] == "self":
+            found.append(f"pack.json: the banner {banner!r} is social's own; its README is written by the exporter, not a consumer")
+        for theme in sync.THEMES:
+            path = sync.master(data, entry, theme)
+            if not (root / path).is_file():
+                found.append(f"{path}: missing, and the README of {repository} reads it from {sync.RAW}{path}")
+    read = {consumer.get("banner") for consumer in listed}
+    for entry in sync.rows(data):
+        if entry["mode"] != "self" and entry["repo"] not in read:
+            found.append(f"pack.json: no consumer reads the banner of {entry['repo']}; list its README under readme_banners.consumers")
+    return found
+
+
 def banner_findings(root: Path, built: Banner) -> list[str]:
-    """Return what in one banner breaks the system: something outside its place, or too small to read where a README shows it."""
+    """Return what in one banner breaks the system: something outside its place, off the middle, or too small to read where a README shows it."""
     drawing, row = built.drawing, built.row
     found = source.keep_findings(drawing)
     column, motif_box = drawing.guides.get("column"), drawing.guides.get("motif-box")
@@ -254,8 +308,20 @@ def banner_findings(root: Path, built: Banner) -> list[str]:
             if abs(drawing.motif[3] - top) > 0.01:
                 found.append(f"{drawing.name}: its motif does not stand on the shelf (its lowest edge is at {drawing.motif[3]:.1f}, the shelf's top at {top:.1f})")
     brand = pack.brand_root(root)
+    middle = drawing.size[1] / 2
+    # The block ends at its last line's descender line, the font's, so a line with no descending letter measures the same.
+    bottoms = []
+    for name, placed in drawing.words.items():
+        if name.startswith("line."):
+            font, _ = lettering._instance(brand, placed.line.family, placed.line.axes)  # noqa: SLF001
+            bottoms.append(placed.y - float(font["OS/2"].sTypoDescender) * placed.scale)
+    if drawing.lockup is not None and bottoms:
+        block = (drawing.lockup[1] + max(bottoms)) / 2
+        if abs(block - middle) > CENTRE_TOLERANCE:
+            found.append(f"{drawing.name}: its text block is centred at {block:.1f}; the canvas's middle is {middle:.0f}")
+    if abs((motif_box[1] + motif_box[3]) / 2 - middle) > CENTRE_TOLERANCE:
+        found.append(f"{drawing.name}: the motif's box is centred at {(motif_box[1] + motif_box[3]) / 2:.1f}; the canvas's middle is {middle:.0f}")
     for name, width, least, part, what in (
-        ("title", NARROW_PX, MIN_TITLE_PX, "sCapHeight", "the title's capitals"),
         ("line.0", WIDE_PX, MIN_LINE_PX, "sxHeight", "the line's x-height"),
         ("label", WIDE_PX, MIN_LABEL_PX, "sCapHeight", "the label's capitals"),
     ):

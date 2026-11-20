@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""The README banners: every row holds the system, the files are exact, and the sync tool copies them true."""
+"""The README banners: every row holds the system, the files are exact, and every README reads them from here."""
 from __future__ import annotations
 
 import dataclasses
@@ -45,10 +45,25 @@ def test_a_row_takes_its_words_from_its_card(data: dict) -> None:
             assert (rows[repo].label, rows[repo].line, rows[repo].motif) == (card.label, card.line, card.motif)
 
 
-def test_a_title_too_long_for_the_column_is_found(data: dict) -> None:
-    row = dataclasses.replace(readme_banners.rows(data)[2], repo="documentation-sites")
+def test_a_line_too_long_for_the_column_is_found(data: dict) -> None:
+    long = "The logo, type, colors, tokens, press kit and much more besides."
+    row = dataclasses.replace(readme_banners.rows(data)[2], line=long, lines=(long,))
     found = readme_banners.banner_findings(ROOT, readme_banners.banner(ROOT, data, row, "dark"))
-    assert any("'title'" in line and "text column" in line for line in found)
+    assert any("'line.0'" in line and "text column" in line for line in found)
+
+
+def test_the_name_is_set_once(built: list[readme_banners.Banner]) -> None:
+    for banner in built:
+        assert "title" not in banner.drawing.words, banner.path
+        assert set(banner.drawing.words) <= {"label", "line.0", "line.1"}, banner.path
+
+
+def test_every_text_block_sits_on_the_middle(data: dict) -> None:
+    row = readme_banners.rows(data)[2]
+    assert len(row.lines) == 1
+    moved = readme_banners.compose(ROOT, data, row, "page")
+    lockup = readme_banners.source.by_id(moved)["lockup"]
+    assert readme_banners.source.placement(lockup)[1] > 168, "a one-line row moves its text block down"
 
 
 def test_a_third_line_is_refused(data: dict) -> None:
@@ -122,55 +137,65 @@ def test_only_the_boards_banner_embeds_pictures(built: list[readme_banners.Banne
         assert embeds == (9 if banner.row.repo == "boards" else 0), banner.path
 
 
-# --- The sync tool ---------------------------------------------------------------------
+# --- The check of each README ----------------------------------------------------------
 
 
 README = "<!-- a comment that stays first -->\n\n# boards\n\nWhat it holds.\n\n```md\n# not a heading\n```\n"
 
 
-def _clone(tmp_path: Path, name: str = "boards", readme: str = README) -> Path:
+def _clone(tmp_path: Path, name: str = "boards", readme: str = README, owner: str = "kleidos-dev") -> Path:
     clone = tmp_path / name
     clone.mkdir()
     (clone / "README.md").write_text(readme, encoding="utf-8")
     subprocess.run(["git", "init", "-q", str(clone)], check=True)
-    subprocess.run(["git", "-C", str(clone), "remote", "add", "origin", f"https://github.com/kleidos-dev/{name}.git"], check=True)
+    subprocess.run(["git", "-C", str(clone), "remote", "add", "origin", f"https://github.com/{owner}/{name}.git"], check=True)
     return clone
 
 
-def test_write_copies_the_files_the_sums_and_the_block(tmp_path: Path, data: dict) -> None:
+def _with_block(clone: Path, data: dict, repo: str = "boards") -> None:
+    readme = clone / "README.md"
+    readme.write_text(sync.with_block(readme.read_text(), sync.block(data, sync.row(data, repo))), encoding="utf-8")
+
+
+def test_the_block_reads_the_masters_by_their_raw_address(data: dict) -> None:
+    text = sync.block(data, sync.row(data, "boards"))
+    raw = "https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/"
+    assert f'srcset="{raw}banner-dark.svg"' in text and f'src="{raw}banner-light.svg"' in text
+    assert 'alt="Kleidos Boards: Drawings, measurements, schematics and 3D models of the boards Kleidos runs on."' in text
+    assert "height=" not in text and ".github/readme" not in text
+
+
+def test_a_current_readme_passes(tmp_path: Path, data: dict) -> None:
     clone = _clone(tmp_path)
-    written = sync.write(clone)
-    assert set(written) == {".github/readme/banner-dark.svg", ".github/readme/banner-light.svg", ".github/readme/SHA256SUMS", "README.md"}
-    for theme in sync.THEMES:
-        assert (clone / f".github/readme/banner-{theme}.svg").read_bytes() == (ROOT / f"svg/readme/boards/banner-{theme}.svg").read_bytes()
-    sums = (clone / ".github/readme/SHA256SUMS").read_text()
-    assert "  .github/readme/banner-dark.svg\n" in sums and "  .github/readme/banner-light.svg\n" in sums
+    _with_block(clone, data)
     text = (clone / "README.md").read_text()
     assert text.startswith("<!-- a comment that stays first -->\n\n" + sync.BEGIN)
     assert text.index(sync.END) < text.index("# boards")
-    assert 'srcset=".github/readme/banner-dark.svg"' in text and 'alt="Kleidos Boards: Drawings' in text
-    assert "height=" not in text.split(sync.END)[0]
-    assert sync.write(clone) == []
     assert sync.findings(clone) == []
-    shasum = subprocess.run(["shasum", "-a", "256", "-c", ".github/readme/SHA256SUMS"], cwd=clone, capture_output=True, text=True)
-    assert shasum.returncode == 0, shasum.stdout + shasum.stderr
+    assert sync.main(["--check", str(clone)]) == 0
 
 
-@pytest.mark.parametrize("change", ["copy", "sums", "block"])
-def test_check_finds_a_stale_copy_sums_or_block(tmp_path: Path, change: str) -> None:
+def test_a_cache_busting_query_is_accepted(tmp_path: Path, data: dict) -> None:
     clone = _clone(tmp_path)
-    sync.write(clone)
-    if change == "copy":
-        target = clone / ".github/readme/banner-light.svg"
-        target.write_bytes(target.read_bytes().replace(b"#0a0c0f", b"#0a0c0e", 1))
-    elif change == "sums":
-        target = clone / ".github/readme/SHA256SUMS"
-        target.write_text(target.read_text().splitlines()[0] + "\n")
+    _with_block(clone, data)
+    readme = clone / "README.md"
+    readme.write_text(readme.read_text().replace('.svg"', '.svg?v=3"'), encoding="utf-8")
+    assert sync.findings(clone) == []
+
+
+@pytest.mark.parametrize("change", ["address", "alt", "copy"])
+def test_check_finds_a_stale_block_or_a_leftover_copy(tmp_path: Path, data: dict, change: str) -> None:
+    clone = _clone(tmp_path)
+    _with_block(clone, data)
+    readme = clone / "README.md"
+    if change == "address":
+        readme.write_text(readme.read_text().replace(sync.RAW, ".github/readme/", 1), encoding="utf-8")
+    elif change == "alt":
+        readme.write_text(readme.read_text().replace("Kleidos Boards:", "Kleidos boards:", 1), encoding="utf-8")
     else:
-        target = clone / "README.md"
-        target.write_text(target.read_text().replace("Kleidos Boards:", "Kleidos boards:", 1))
-    found = sync.findings(clone)
-    assert found, change
+        (clone / ".github/readme").mkdir(parents=True)
+        (clone / ".github/readme/banner-dark.svg").write_text("<svg/>", encoding="utf-8")
+    assert sync.findings(clone), change
     assert sync.main(["--check", str(clone)]) == 1
 
 
@@ -179,33 +204,61 @@ def test_check_finds_a_missing_block(tmp_path: Path) -> None:
     assert any("no banner block" in line for line in sync.findings(clone))
 
 
-def test_a_linked_row_writes_no_file(tmp_path: Path, data: dict) -> None:
-    clone = _clone(tmp_path, "kleidos", "# Kleidos\n\nFirmware.\n")
-    assert sync.write(clone) == ["README.md"]
-    assert not (clone / ".github").exists()
-    text = (clone / "README.md").read_text()
-    assert 'srcset="https://github.com/kleidos-dev/social/raw/main/svg/readme/kleidos/banner-dark.svg"' in text
+def test_check_never_writes(tmp_path: Path) -> None:
+    clone = _clone(tmp_path)
+    before = (clone / "README.md").read_bytes()
+    sync.main(["--check", str(clone)])
+    assert (clone / "README.md").read_bytes() == before
+
+
+def test_the_firmware_is_found_through_its_consumer(tmp_path: Path, data: dict) -> None:
+    clone = _clone(tmp_path, "kleidos", "# Kleidos\n\nFirmware.\n", owner="jmrplens")
+    _with_block(clone, data, "kleidos")
+    assert 'srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/kleidos/banner-dark.svg"' in (clone / "README.md").read_text()
     assert sync.findings(clone) == []
 
 
-def test_the_row_can_be_named(tmp_path: Path) -> None:
+def test_the_row_can_be_named(tmp_path: Path, data: dict) -> None:
     clone = tmp_path / "elsewhere"
     clone.mkdir()
-    (clone / "README.md").write_text("# brand\n", encoding="utf-8")
-    assert "README.md" in sync.write(clone, "brand")
+    (clone / "README.md").write_text(sync.block(data, sync.row(data, "brand")) + "\n\n# brand\n", encoding="utf-8")
     assert sync.findings(clone, "brand") == []
 
 
+def test_print_gives_the_block(capsys: pytest.CaptureFixture[str], data: dict) -> None:
+    assert sync.main(["--print", "meter"]) == 0
+    assert capsys.readouterr().out.strip() == sync.block(data, sync.row(data, "meter"))
+
+
 def test_social_and_an_unknown_repository_are_refused(tmp_path: Path) -> None:
-    with pytest.raises(ValueError, match="tools/export.py"):
-        sync.write(_clone(tmp_path, "social", "# social\n"))
-    with pytest.raises(ValueError, match="no README banner"):
-        sync.write(_clone(tmp_path, "nowhere", "# nowhere\n"))
+    assert any("tools/export.py" in line for line in sync.findings(_clone(tmp_path, "social", "# social\n"), "social"))
+    assert any("not a consumer" in line for line in sync.findings(_clone(tmp_path, "nowhere", "# nowhere\n")))
 
 
 def test_a_readme_with_no_heading_is_refused() -> None:
     with pytest.raises(ValueError, match="no level-1 heading"):
         sync.with_block("Just words.\n\n```\n# fenced\n```\n", "BLOCK")
+
+
+def test_every_consumer_reads_a_banner_that_is_here(data: dict) -> None:
+    assert readme_banners.consumer_findings(ROOT, data) == []
+    assert {consumer["repository"] for consumer in sync.consumers(data)} >= {"jmrplens/kleidos", "kleidos-dev/boards", "kleidos-dev/.github"}
+
+
+def test_a_banner_a_readme_reads_cannot_go(tmp_path: Path, data: dict) -> None:
+    changed = json.loads(json.dumps(data))
+    changed["readme_banners"]["consumers"].append({"repository": "kleidos-dev/elsewhere", "banner": "nothing"})
+    assert any("no banner row has that name" in line for line in readme_banners.consumer_findings(ROOT, changed))
+    empty = tmp_path / "social"
+    empty.mkdir()
+    found = readme_banners.consumer_findings(empty, data)
+    assert any("svg/readme/boards/banner-dark.svg: missing" in line and "kleidos-dev/boards" in line for line in found)
+
+
+def test_a_banner_no_readme_reads_is_found(data: dict) -> None:
+    changed = json.loads(json.dumps(data))
+    changed["readme_banners"]["consumers"] = [c for c in changed["readme_banners"]["consumers"] if c["banner"] != "posts"]
+    assert any("no consumer reads the banner of posts" in line for line in readme_banners.consumer_findings(ROOT, changed))
 
 
 def test_socials_own_readme_shows_its_masters() -> None:

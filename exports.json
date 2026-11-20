@@ -12,7 +12,7 @@
       "drawn_from": "2ca8fd3807457220e5652af489135a2aa678cdb9bc8e75ff735b821da989db4f",
       "inputs": {
         "src/shared/avatar.svg": "b53d70de2b7cc0606720fb40d3d984f565f5e15b71991248d5f9dda3ddfe8614",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -31,7 +31,7 @@
       "drawn_from": "a04c0e0f632d753cbeb58ca3a444471e303bf8d1e99d6fc4e51a76891a86b9ff",
       "inputs": {
         "src/shared/avatar.svg": "b53d70de2b7cc0606720fb40d3d984f565f5e15b71991248d5f9dda3ddfe8614",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -50,7 +50,7 @@
       "drawn_from": "85097f77fb736d4b6d5614f3d636bc0f3775159fedc00520953705dba15c8ee2",
       "inputs": {
         "src/youtube/banner.svg": "8b9a72323090ea229b6972d46b08d8d5fc72171a5c999b705a1eebacaad17ae5",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -91,7 +91,7 @@
       "drawn_from": "12301617ae446354cb1bb443106a31f913a4d820624957b885a6e06edf2f0385",
       "inputs": {
         "src/youtube/watermark.svg": "da6f0213cc2fda955e840816846043cba2b92a19f0150274eeb702365a09c5db",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -110,7 +110,7 @@
       "drawn_from": "0255fa90eaead9539eb0797562ac0dc48e077a435b9b6b4ddd4fe95b61fea225",
       "inputs": {
         "src/youtube/thumbnail.svg": "c68a38fa71f6f98123bd044596cc207017b32828e00386e50dd651d113d87e6e",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -129,7 +129,7 @@
       "drawn_from": "1a63b71c10e0afb87310c5ce8311d3241e5ebd817ae41c3c076a4c9c713e6f85",
       "inputs": {
         "src/makertube/banner.svg": "d5db032e86a026ac8fbd10a3c04c15980252e713e4dedc4ca4124b5d8a7a2f34",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -149,7 +149,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/typing.svg": "c99744375d76bda6b5d3640960e1cc95d35e91c102c14e75e352066f0f8a1b4f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -169,7 +169,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/shelf.svg": "571d86c66b486fc27d122442c8ad0f6e871f8dee9684f5fe069d682376f85bf5",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -211,7 +211,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/swatches.svg": "38538b48fbf15b628b8d6ccd9c1d48580d1e137ec417a940770a3f914877ccb0",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -231,7 +231,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/frames.svg": "3e02ae1b4165cb242f3b0b5d38cfcfe47dc4e30ffc3449a94431585835bdaf56",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -251,7 +251,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/checklist.svg": "0b07b564f7ec00759a20401edb46a735a4ad0701163cff2dad6c0382756d42c3",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -271,7 +271,7 @@
       "inputs": {
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/bubbles.svg": "bdd00c1a88441ad5709e52b2d0a38932280138bf99937db2b7ff12afd1b3de7f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -281,17 +281,17 @@
       }
     },
     "svg/readme/kleidos/banner-dark.svg": {
-      "sha256": "30c4fe833fb302d5ce2b258672339c77c14a7531412de991a3dc353db071dba0",
-      "bytes": 33049,
+      "sha256": "a28e08d77da0d07944ff52cb80c2ae1da667a5f18ec5d77dde717ababec3133f",
+      "bytes": 30590,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "e4dbd07e610fac0493f873969bc895757e67b70928a32983b6712b9336e41d96",
+      "drawn_from": "c740a00e250b6947ad9d903ee266dec939e7262a0b5394a6c8370e7179ef2969",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/typing.svg": "c99744375d76bda6b5d3640960e1cc95d35e91c102c14e75e352066f0f8a1b4f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -301,17 +301,17 @@
       }
     },
     "svg/readme/kleidos/banner-light.svg": {
-      "sha256": "f42a9fee86751b8b7a631b280aaf26a5622b137d0c10d92d6b79154e2fbe8d84",
-      "bytes": 33156,
+      "sha256": "c22def0854406375e31967dde8444db0ed3c8a6a891768237eab930a70a1c34c",
+      "bytes": 30697,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "e2fc56075f522e3e2facdb2f02406f51a8fa5950aa2c82dc5cd3f4ffcbfe60fd",
+      "drawn_from": "3a078b99b8f602b22360338e7e50be735bf9c2a5ac706995057c602f57182051",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/typing.svg": "c99744375d76bda6b5d3640960e1cc95d35e91c102c14e75e352066f0f8a1b4f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -321,17 +321,17 @@
       }
     },
     "svg/readme/boards/banner-dark.svg": {
-      "sha256": "f531ab347149d0a32a275c999122e4d33934fbd0e63c3af9db13b63fdcff10bf",
-      "bytes": 409463,
+      "sha256": "57059202ed713f5c9472614694d4094c58bfbe0b6beddbd888854eb73f8beb07",
+      "bytes": 406746,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "26d9cb9a8c8e24585712e3e8d9009ba2e2c09a503d35e38e11aa8ec8267a3b57",
+      "drawn_from": "da85f24e374400b3e0197539c6ffdb285fd53fb532848a4051035d93381c2696",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/shelf.svg": "571d86c66b486fc27d122442c8ad0f6e871f8dee9684f5fe069d682376f85bf5",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -363,17 +363,17 @@
       }
     },
     "svg/readme/boards/banner-light.svg": {
-      "sha256": "85edb64c9f7c95b7ccaafc054694dd562dff5990fab7faafc6b5149ef11ae0b8",
-      "bytes": 409570,
+      "sha256": "333ea365d153b115aaea0e50047eeb65dfbfe06cc0dfcf067a53db4270ce9133",
+      "bytes": 406853,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "14760a7ada82cfb7968dd8a3836c6d58eb8b45799bd59c66152b2bf6b8e0405b",
+      "drawn_from": "9657722781e8966eb5b0431922e6fce06f8697ce5498694946216d8930b1d665",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/shelf.svg": "571d86c66b486fc27d122442c8ad0f6e871f8dee9684f5fe069d682376f85bf5",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -405,17 +405,17 @@
       }
     },
     "svg/readme/brand/banner-dark.svg": {
-      "sha256": "ce1a3c980929debdc12a49cdc1da8766919004212ec363ed8d01700dd943dda2",
-      "bytes": 24533,
+      "sha256": "1105a1faf18b7c7cd2e5462c2f62236ee400b1cb917382793f44ae13a35282d9",
+      "bytes": 22667,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "b1c138b0eedcd6de1b59ec60ca4a44647bbc96ff1471366b90b2085c9c43e39f",
+      "drawn_from": "30e80300f8d4e980c26e4c63091c5f611ba78186533d63dec013fa6fce712d2a",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/swatches.svg": "38538b48fbf15b628b8d6ccd9c1d48580d1e137ec417a940770a3f914877ccb0",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -425,17 +425,17 @@
       }
     },
     "svg/readme/brand/banner-light.svg": {
-      "sha256": "ed2915aaad3c97122d28facf251d959781e9473882448879a464305363533195",
-      "bytes": 24640,
+      "sha256": "f29affa827341e7550e905b2f8779ae3f4cb8845f83adcbec38f8d4c7a2119a6",
+      "bytes": 22774,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "9e86eafc6ad5060f637fef5847c7283146d23aed22740c1918eb76e4c1f0c0ab",
+      "drawn_from": "82b94dd83f56883da473c5bd378db139b0bf01eaa6f6b8c2c02f35bacd5650b8",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/swatches.svg": "38538b48fbf15b628b8d6ccd9c1d48580d1e137ec417a940770a3f914877ccb0",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -445,17 +445,17 @@
       }
     },
     "svg/readme/social/banner-dark.svg": {
-      "sha256": "e9a0515285a09389101025a287305729998462e7fd94bb3a039ddb8a0ec0a647",
-      "bytes": 32108,
+      "sha256": "73fc366590ae51085c9ef77d3eb2c7e710423f5f5673e796e4eedf25256caf3b",
+      "bytes": 29851,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "5781b283aa7cf77f74c9b6e078521bd27e98c4eeabe95afdffd7fc52f452c86f",
+      "drawn_from": "01aa9d7f63624b75085a0e0ae52c5bd9b285f533905ed69254f23ed0fdd795a7",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/frames.svg": "3e02ae1b4165cb242f3b0b5d38cfcfe47dc4e30ffc3449a94431585835bdaf56",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -465,17 +465,17 @@
       }
     },
     "svg/readme/social/banner-light.svg": {
-      "sha256": "fbac0bc57461e363837af767222f6001839a427ce7a57a74315e0a58bf58ad9f",
-      "bytes": 32215,
+      "sha256": "509f863096edcad4fa1b83312fc4be3a0af7636eb5f893dad0f0fd5ba3626dd5",
+      "bytes": 29958,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "b155c451e20433602d8f9bf42c27bc7f53929f0304eef443d661d25557fada96",
+      "drawn_from": "d697172430ef52a2b8e4ae2b04cf42b6176d904b6686b470e82b8d6b55e43cfa",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/frames.svg": "3e02ae1b4165cb242f3b0b5d38cfcfe47dc4e30ffc3449a94431585835bdaf56",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -485,17 +485,17 @@
       }
     },
     "svg/readme/agents/banner-dark.svg": {
-      "sha256": "6047d9d03ec3ad5ca216f6c7894f2624d857ef5fb657cf21f127f1cb8008c7f9",
-      "bytes": 27913,
+      "sha256": "f70ce9353025cc431caca73b6d97b3dd3140daee4abc97ba406dce6f10e900fe",
+      "bytes": 25284,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "7910a5665ea2874f2079b091d3b56dd8014e218ba280ff7ce40ada30f8a51d50",
+      "drawn_from": "75594a65f75389de497224a1186f1405371a8c9d25470945a0458f21d9a1dbb8",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/checklist.svg": "0b07b564f7ec00759a20401edb46a735a4ad0701163cff2dad6c0382756d42c3",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -505,17 +505,17 @@
       }
     },
     "svg/readme/agents/banner-light.svg": {
-      "sha256": "ca19102cba2947ef59854807773a4d88f54d2b0fb80f4e14cea4b939b2fa0689",
-      "bytes": 28020,
+      "sha256": "a486df842177699119173320f3a8c35c4bc1d289e299b228f993af76d92169a4",
+      "bytes": 25391,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "2219805f28acfb3ceb8ceb1900add1742e174fb267cd6c69f572c603b7c19cbc",
+      "drawn_from": "5f3b6096f9704031a00830b7ce31b51335029384391bea1aa95ac7e000fee3f2",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/checklist.svg": "0b07b564f7ec00759a20401edb46a735a4ad0701163cff2dad6c0382756d42c3",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -525,17 +525,17 @@
       }
     },
     "svg/readme/dot-github/banner-dark.svg": {
-      "sha256": "e0af707552e20884b66463aaa0f98841e5612dce25968ae06bf0192b0b93c927",
-      "bytes": 33861,
+      "sha256": "f11909f9a5987db0f44061853a885569cbb90c52388eaf241b11b5d0c12b2ad2",
+      "bytes": 31768,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "8a2bd2d4e81e536031218b64d2a154a24f5da43cd6e3772a94cd75aa48bf6a78",
+      "drawn_from": "1b8022b381a6728ff8fd28bf814ac57727955d927c8764127ad3d43a94f0d509",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/bubbles.svg": "bdd00c1a88441ad5709e52b2d0a38932280138bf99937db2b7ff12afd1b3de7f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -545,17 +545,17 @@
       }
     },
     "svg/readme/dot-github/banner-light.svg": {
-      "sha256": "9c3a36833ae86b4cf71752005c57e1256e8b7b2e4ba2e4aa645f0219e135209f",
-      "bytes": 33968,
+      "sha256": "b9bf2d589a4e79fd221ea60a0514cbcebeed80941c4e9bda793fa311da2fc23a",
+      "bytes": 31875,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "1f58f903b01882809086ac4f73347803b5349b651059073cce162732d143453e",
+      "drawn_from": "91f238cf2b24ca96c6af0ae2974f2fa2e4da4de2c79c4256491590fe13a8b9ac",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/bubbles.svg": "bdd00c1a88441ad5709e52b2d0a38932280138bf99937db2b7ff12afd1b3de7f",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -565,17 +565,17 @@
       }
     },
     "svg/readme/meter/banner-dark.svg": {
-      "sha256": "acaea929b300b279a4e4163cae577eff31cd3125e61f0bb6542fff3770bc2af3",
-      "bytes": 29734,
+      "sha256": "452265f2903a924157895d9af63f3febae84dff873729603ec5394ee4a6642fe",
+      "bytes": 27963,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "833e09e3b8ef029875812857560c787ccb6f739753b50a0aed2b0fe9050e1fcc",
+      "drawn_from": "1ac382ba34a7e06bfc3e1f82aaa34f8772aca98f17251c739452d0d31da8c17c",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/gauge.svg": "fd8477bf5f5684292879ce08ba7777c460ab88a341c45d060335ee5617629a52",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -585,17 +585,17 @@
       }
     },
     "svg/readme/meter/banner-light.svg": {
-      "sha256": "74ef11bba735af23e9afc328957c381bd64a4707b0d7210743dd7415c982d71a",
-      "bytes": 29841,
+      "sha256": "f62aaba7d2a3b8e5afa3f8ea2557093a48a0c9dba9980d646b76543f660f28b0",
+      "bytes": 28070,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "6bf30a39c1451b244ce2ec600835263431992a8e2b5c80763b20ba7d1e181353",
+      "drawn_from": "f9fedb0146b36dfcea400b5df257063e44273b7401a411185ddd178256b6fba1",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/gauge.svg": "fd8477bf5f5684292879ce08ba7777c460ab88a341c45d060335ee5617629a52",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -605,17 +605,17 @@
       }
     },
     "svg/readme/videos/banner-dark.svg": {
-      "sha256": "4b4668f4b4a755307fa947c1b1c754d7f9d0814ad48749f12720eeccd73bd029",
-      "bytes": 30391,
+      "sha256": "94e1065b8d1258cef2e84e761cb084a8138d3d83b9d3271164670e42d3598f8e",
+      "bytes": 28010,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "a998d2d14f7628912abd906f8d0f44b6efa2448e33eb1242c06d981d593df288",
+      "drawn_from": "6ebd71eb6ac1f03e3feae7fc56406fd6730cb023e8e7a28aed17305c71769e73",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/reel.svg": "8c7ad711103f51cd57e7bae30aa41e251c1430aa46dd182555310cdb1ce14133",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -625,17 +625,17 @@
       }
     },
     "svg/readme/videos/banner-light.svg": {
-      "sha256": "f1b32a703f47e26471e5922f2db1983e232c993e8d151d50846b85c7c05f3635",
-      "bytes": 30498,
+      "sha256": "a2e660a7a2c730b3001a853e12f0630370ab855b8d34dd3c6435ff17caf1abd3",
+      "bytes": 28117,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "68cb3693ae52b37fda5b241f2c8736548ae8e530378d6fbb63c30e590d21234a",
+      "drawn_from": "25ce38f2693a9f7232f5bb2f0596408dd821ed1e0665e88390fa044f6205683c",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/reel.svg": "8c7ad711103f51cd57e7bae30aa41e251c1430aa46dd182555310cdb1ce14133",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -645,17 +645,17 @@
       }
     },
     "svg/readme/posts/banner-dark.svg": {
-      "sha256": "a0630bbcaf8148ddbd39fabf981e272af892ca36a7bf23c025d3ef36ea41299a",
-      "bytes": 25713,
+      "sha256": "6aa5b423babf311ae1187c557702ca6cbe5d6b4fb0ea170af7dc5b400a0218fd",
+      "bytes": 23306,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "d818aaf6068b0355655f70f9ea2ca8ec23749062441e7d1762a2ef68bde15793",
+      "drawn_from": "7d710433271476aa64e659439eb67d587fe432226953546b4cc731d10d80faab",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/sheets.svg": "369ccd8c8eb47222eecbe7c9612396dae0fc39dfa938c2373253d5e0e46aea03",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -665,17 +665,17 @@
       }
     },
     "svg/readme/posts/banner-light.svg": {
-      "sha256": "2c59d9d282cac18ad431fa08676456cdda905d192445110e91390d41f757248c",
-      "bytes": 25820,
+      "sha256": "2236265cc03b84570cdc2ba28a7ca2b95469201d64aa654b4fa0a2274dfc6b1f",
+      "bytes": 23413,
       "size": [
         1280,
         400
       ],
-      "drawn_from": "be1af6ab5e344ae65afbb929fc4dccd7b1159775182b9eae1df06a5fc05bab67",
+      "drawn_from": "2c7e1cc19bd8eaa841ba3b2aa17ae4b151c3cb563f33da6f1e4aebfbe6eb848f",
       "inputs": {
-        "src/readme/banner.svg": "28fad8d2f3fbf20cc7619640e59c9da23ba73207c334e4363601414e66cc3a09",
+        "src/readme/banner.svg": "e5f3e6da9871b879ee668b1096ffb1551392653597bcba53f4f933babe20c54b",
         "src/cards/motifs/sheets.svg": "369ccd8c8eb47222eecbe7c9612396dae0fc39dfa938c2373253d5e0e46aea03",
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
@@ -693,7 +693,7 @@
       ],
       "drawn_from": "13b1dec03b6cf1992b582bd421bdb4547ffbf396dfad173706b569997fc89a6f",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
         "png/youtube/avatar.png": "2c12587814bcffbd85f1041fa76768c1093aab7a1e5db05bb0fee55609f8ccc9",
         "png/makertube/avatar.png": "4829b385d03cf3ff923778f79f38972c1cc280909401c9135ebcf1e9e999e7e1",
@@ -724,7 +724,7 @@
       ],
       "drawn_from": "18ef48e7e623cafe9e89c556232d86fc51f5bc0f8a0f0803ed82020295026c59",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
         "png/youtube/avatar.png": "2c12587814bcffbd85f1041fa76768c1093aab7a1e5db05bb0fee55609f8ccc9",
         "png/makertube/avatar.png": "4829b385d03cf3ff923778f79f38972c1cc280909401c9135ebcf1e9e999e7e1",
@@ -745,7 +745,7 @@
       ],
       "drawn_from": "a17fe12bb583ee5e73a233be5ec6fae1238fd9c027a5338dd2435cc50515a375",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
         "png/youtube/banner.png": "2256dd7311063be6ebf9b5b6f9f88583f1e5d9ba5b43c9aa71afb5b63fd66e0f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
@@ -765,7 +765,7 @@
       ],
       "drawn_from": "a3a68f2e1c46244ff1244e84607054f22a1d47695755e0b732ab0c6e6e62c1c8",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
         "png/makertube/banner.png": "8e89a4de63f08b184da9612286787750cccd3135181ccd3ad542b257dbfdc474",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
@@ -785,7 +785,7 @@
       ],
       "drawn_from": "15cdd002b4f941105d62ef32120fc5e094d470d3b071130771f9f93a2b5e2aea",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
         "src/cards/card.svg": "4ca604d9b4fb36e1261c8836855c0dcd93a270500352477883ae1997de26b650",
         "src/cards/motifs/shelf.svg": "571d86c66b486fc27d122442c8ad0f6e871f8dee9684f5fe069d682376f85bf5",
@@ -804,34 +804,34 @@
       }
     },
     "previews/readme-banners.png": {
-      "sha256": "776916c66c8ec55a5849c24ff3fdda9fe4ad0f36bf496760fb2c926f298c97ae",
-      "bytes": 1233751,
+      "sha256": "2b47a240f327e8e39d619cbcb2de9f87a019b0aa8e9c22e1097f7903973d31ba",
+      "bytes": 1134756,
       "size": [
         1938,
         5679
       ],
       "drawn_from": "6dcaecca196a479af8a70d9a8219ea0be47a9635e867b56ac0d0fa1363757781",
       "inputs": {
-        "pack.json": "54a5eda9f204da84f46c4f782bdc60ab993913b3670780301511c23e4c909f75",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
         "tools/previews.py": "438e71bbaa115adb241c9737adec28c8f4f8ebb75d7d1761e19ceab38476f7bd",
-        "svg/readme/kleidos/banner-dark.svg": "30c4fe833fb302d5ce2b258672339c77c14a7531412de991a3dc353db071dba0",
-        "svg/readme/kleidos/banner-light.svg": "f42a9fee86751b8b7a631b280aaf26a5622b137d0c10d92d6b79154e2fbe8d84",
-        "svg/readme/boards/banner-dark.svg": "f531ab347149d0a32a275c999122e4d33934fbd0e63c3af9db13b63fdcff10bf",
-        "svg/readme/boards/banner-light.svg": "85edb64c9f7c95b7ccaafc054694dd562dff5990fab7faafc6b5149ef11ae0b8",
-        "svg/readme/brand/banner-dark.svg": "ce1a3c980929debdc12a49cdc1da8766919004212ec363ed8d01700dd943dda2",
-        "svg/readme/brand/banner-light.svg": "ed2915aaad3c97122d28facf251d959781e9473882448879a464305363533195",
-        "svg/readme/social/banner-dark.svg": "e9a0515285a09389101025a287305729998462e7fd94bb3a039ddb8a0ec0a647",
-        "svg/readme/social/banner-light.svg": "fbac0bc57461e363837af767222f6001839a427ce7a57a74315e0a58bf58ad9f",
-        "svg/readme/agents/banner-dark.svg": "6047d9d03ec3ad5ca216f6c7894f2624d857ef5fb657cf21f127f1cb8008c7f9",
-        "svg/readme/agents/banner-light.svg": "ca19102cba2947ef59854807773a4d88f54d2b0fb80f4e14cea4b939b2fa0689",
-        "svg/readme/dot-github/banner-dark.svg": "e0af707552e20884b66463aaa0f98841e5612dce25968ae06bf0192b0b93c927",
-        "svg/readme/dot-github/banner-light.svg": "9c3a36833ae86b4cf71752005c57e1256e8b7b2e4ba2e4aa645f0219e135209f",
-        "svg/readme/meter/banner-dark.svg": "acaea929b300b279a4e4163cae577eff31cd3125e61f0bb6542fff3770bc2af3",
-        "svg/readme/meter/banner-light.svg": "74ef11bba735af23e9afc328957c381bd64a4707b0d7210743dd7415c982d71a",
-        "svg/readme/videos/banner-dark.svg": "4b4668f4b4a755307fa947c1b1c754d7f9d0814ad48749f12720eeccd73bd029",
-        "svg/readme/videos/banner-light.svg": "f1b32a703f47e26471e5922f2db1983e232c993e8d151d50846b85c7c05f3635",
-        "svg/readme/posts/banner-dark.svg": "a0630bbcaf8148ddbd39fabf981e272af892ca36a7bf23c025d3ef36ea41299a",
-        "svg/readme/posts/banner-light.svg": "2c59d9d282cac18ad431fa08676456cdda905d192445110e91390d41f757248c",
+        "svg/readme/kleidos/banner-dark.svg": "a28e08d77da0d07944ff52cb80c2ae1da667a5f18ec5d77dde717ababec3133f",
+        "svg/readme/kleidos/banner-light.svg": "c22def0854406375e31967dde8444db0ed3c8a6a891768237eab930a70a1c34c",
+        "svg/readme/boards/banner-dark.svg": "57059202ed713f5c9472614694d4094c58bfbe0b6beddbd888854eb73f8beb07",
+        "svg/readme/boards/banner-light.svg": "333ea365d153b115aaea0e50047eeb65dfbfe06cc0dfcf067a53db4270ce9133",
+        "svg/readme/brand/banner-dark.svg": "1105a1faf18b7c7cd2e5462c2f62236ee400b1cb917382793f44ae13a35282d9",
+        "svg/readme/brand/banner-light.svg": "f29affa827341e7550e905b2f8779ae3f4cb8845f83adcbec38f8d4c7a2119a6",
+        "svg/readme/social/banner-dark.svg": "73fc366590ae51085c9ef77d3eb2c7e710423f5f5673e796e4eedf25256caf3b",
+        "svg/readme/social/banner-light.svg": "509f863096edcad4fa1b83312fc4be3a0af7636eb5f893dad0f0fd5ba3626dd5",
+        "svg/readme/agents/banner-dark.svg": "f70ce9353025cc431caca73b6d97b3dd3140daee4abc97ba406dce6f10e900fe",
+        "svg/readme/agents/banner-light.svg": "a486df842177699119173320f3a8c35c4bc1d289e299b228f993af76d92169a4",
+        "svg/readme/dot-github/banner-dark.svg": "f11909f9a5987db0f44061853a885569cbb90c52388eaf241b11b5d0c12b2ad2",
+        "svg/readme/dot-github/banner-light.svg": "b9bf2d589a4e79fd221ea60a0514cbcebeed80941c4e9bda793fa311da2fc23a",
+        "svg/readme/meter/banner-dark.svg": "452265f2903a924157895d9af63f3febae84dff873729603ec5394ee4a6642fe",
+        "svg/readme/meter/banner-light.svg": "f62aaba7d2a3b8e5afa3f8ea2557093a48a0c9dba9980d646b76543f660f28b0",
+        "svg/readme/videos/banner-dark.svg": "94e1065b8d1258cef2e84e761cb084a8138d3d83b9d3271164670e42d3598f8e",
+        "svg/readme/videos/banner-light.svg": "a2e660a7a2c730b3001a853e12f0630370ab855b8d34dd3c6435ff17caf1abd3",
+        "svg/readme/posts/banner-dark.svg": "6aa5b423babf311ae1187c557702ca6cbe5d6b4fb0ea170af7dc5b400a0218fd",
+        "svg/readme/posts/banner-light.svg": "2236265cc03b84570cdc2ba28a7ca2b95469201d64aa654b4fa0a2274dfc6b1f",
         "brand/logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "brand/tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",

@@ -73,21 +73,21 @@ At 400 px wide, the size a chat or a search result gives a card, the title's cap
 
 ### README banners
 
-The repository card laid out again as a wide strip, for the head of each repository's `README.md`: the lockup, a hairline and the label, the repository's name, its line in one or two lines, the ruled shelf and the repository's motif standing on it. Same parts, same type and same colors as the card, on 2560 x 800 units (the card's units), published 1280 x 400 as SVG: words as outlines, no script, no style sheet, no font, no animation. A README shows it 823 to 838 px wide on a computer and 279 to 349 px wide on a phone.
+The repository card laid out again as a wide strip, for the head of each repository's `README.md`: the lockup, a hairline and the label (which names the repository, so its name is not set twice), its line in one or two lines under them, the ruled shelf and the repository's motif standing on it. Same parts, same type and same colors as the card, on 2560 x 800 units (the card's units), published 1280 x 400 as SVG: words as outlines, no script, no style sheet, no font, no animation. A README shows it 823 to 838 px wide on a computer and 279 to 349 px wide on a phone.
 
 <!-- BEGIN GENERATED: readme-banners (tools/export.py); do not edit by hand -->
 
-| Repository | Dark theme | Light theme | Label | Line | Motif | In its README |
+| Repository | Dark theme | Light theme | Label | Line | Motif | Read by the README of |
 | --- | --- | --- | --- | --- | --- | --- |
-| `kleidos-dev/kleidos` | [33 kB](svg/readme/kleidos/banner-dark.svg) | [33 kB](svg/readme/kleidos/banner-light.svg) | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) | linked from here |
-| `kleidos-dev/boards` | [409 kB](svg/readme/boards/banner-dark.svg) | [410 kB](svg/readme/boards/banner-light.svg) | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/brand` | [25 kB](svg/readme/brand/banner-dark.svg) | [25 kB](svg/readme/brand/banner-light.svg) | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/social` | [32 kB](svg/readme/social/banner-dark.svg) | [32 kB](svg/readme/social/banner-light.svg) | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) | read from here |
-| `kleidos-dev/agents` | [28 kB](svg/readme/agents/banner-dark.svg) | [28 kB](svg/readme/agents/banner-light.svg) | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/.github` | [34 kB](svg/readme/dot-github/banner-dark.svg) | [34 kB](svg/readme/dot-github/banner-light.svg) | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/meter` | [30 kB](svg/readme/meter/banner-dark.svg) | [30 kB](svg/readme/meter/banner-light.svg) | INSTRUMENT | The bench meter that measures what each Kleidos board draws. | [`gauge`](src/cards/motifs/gauge.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/videos` | [30 kB](svg/readme/videos/banner-dark.svg) | [30 kB](svg/readme/videos/banner-light.svg) | VIDEOS | The sources, inputs and builds of every Kleidos channel video. | [`reel`](src/cards/motifs/reel.svg) | a copy in `.github/readme/` |
-| `kleidos-dev/posts` | [26 kB](svg/readme/posts/banner-dark.svg) | [26 kB](svg/readme/posts/banner-light.svg) | POSTS | Drafts and records of every Kleidos publication. | [`sheets`](src/cards/motifs/sheets.svg) | a copy in `.github/readme/` |
+| `kleidos-dev/kleidos` | [31 kB](svg/readme/kleidos/banner-dark.svg) | [31 kB](svg/readme/kleidos/banner-light.svg) | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) | `jmrplens/kleidos` |
+| `kleidos-dev/boards` | [407 kB](svg/readme/boards/banner-dark.svg) | [407 kB](svg/readme/boards/banner-light.svg) | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) | `kleidos-dev/boards` |
+| `kleidos-dev/brand` | [23 kB](svg/readme/brand/banner-dark.svg) | [23 kB](svg/readme/brand/banner-light.svg) | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) | `kleidos-dev/brand` |
+| `kleidos-dev/social` | [30 kB](svg/readme/social/banner-dark.svg) | [30 kB](svg/readme/social/banner-light.svg) | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) | this one, by path |
+| `kleidos-dev/agents` | [25 kB](svg/readme/agents/banner-dark.svg) | [25 kB](svg/readme/agents/banner-light.svg) | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) | `kleidos-dev/agents` |
+| `kleidos-dev/.github` | [32 kB](svg/readme/dot-github/banner-dark.svg) | [32 kB](svg/readme/dot-github/banner-light.svg) | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) | `kleidos-dev/.github` |
+| `kleidos-dev/meter` | [28 kB](svg/readme/meter/banner-dark.svg) | [28 kB](svg/readme/meter/banner-light.svg) | INSTRUMENT | The bench meter that measures what each Kleidos board draws. | [`gauge`](src/cards/motifs/gauge.svg) | `kleidos-dev/meter` |
+| `kleidos-dev/videos` | [28 kB](svg/readme/videos/banner-dark.svg) | [28 kB](svg/readme/videos/banner-light.svg) | VIDEOS | The sources, inputs and builds of every Kleidos channel video. | [`reel`](src/cards/motifs/reel.svg) | `kleidos-dev/videos` |
+| `kleidos-dev/posts` | [23 kB](svg/readme/posts/banner-dark.svg) | [23 kB](svg/readme/posts/banner-light.svg) | POSTS | Drafts and records of every Kleidos publication. | [`sheets`](src/cards/motifs/sheets.svg) | `kleidos-dev/posts` |
 
 <!-- END GENERATED: readme-banners -->
 
@@ -96,25 +96,38 @@ Each repository has two files, served with `<picture>` and `prefers-color-scheme
 | Part | Place and size | Style |
 | --- | --- | --- |
 | Canvas | 2560 x 800, published `width="1280" height="400"` | the dark file: no ground; the light file: the stage color, corners rounded 56 units |
-| Lockup | `translate(81 72) scale(0.17)`, the mark box 224 units | brand's horizontal lockup for a dark ground; the ring's outer edge stands on the 96 unit margin |
-| Hairline and label | x 1036, y 113 to 255; label at x 1104, baseline 210, 72 units | the rule color; Mona Sans Mono 500, capitals, tracked 0.14 em, second ink |
-| Title | x 96, baseline 500, 192 units | the display face (width 112.5, weight 650, optical size 72), tracked -0.025 em; the repository's name as GitHub writes it |
-| Line | baselines 612 and 692, 64 units, one or two lines inside the column (96 to 1568) | the text face (weight 400, optical size 20), second ink |
-| Shelf | at 744, from 96 to 2464, a tick every 40 units | the rule color, 4 units |
-| Motif | stands on the shelf, inside 800 x 480 at (1664, 262) | the card's motif of the same repository, unchanged |
+| Lockup | `translate(81 168) scale(0.17)`, the mark box 224 units | brand's horizontal lockup for a dark ground; the ring's outer edge stands on the 96 unit margin |
+| Hairline and label | x 1036, y 209 to 351; label at x 1104, baseline 306, 72 units | the rule color; Mona Sans Mono 500, capitals, tracked 0.14 em, second ink; the label names the repository, so its name is not set again |
+| Line | baselines 512 and 604, 72 units, one or two lines inside the column (96 to 1568) | the text face (weight 400, optical size 20), second ink |
+| Shelf | at 642, from 96 to 2464, a tick every 40 units | the rule color, 4 units |
+| Motif | stands on the shelf, inside 800 x 480 at (1664, 160) | the card's motif of the same repository, unchanged |
 
-On a 360 px phone (279 px wide) the mark is 24.5 px, the least brand gives it on a dark ground, and the title's capitals 15 px; on a computer (823 px) the line's x-height is 10 px and the label's capitals 17 px. The line is decorative on a phone, as a card's is at 320 px: the alt text carries it. `tools/check.py` holds every banner to those floors.
+The text block (the lockup down to the last line) and the motif's box are centred on the canvas's middle, at 400; a row of one line moves its text block down half a line (46 units) so it stays there.
+
+On a 360 px phone (279 px wide) the mark is 24.5 px, the least brand gives it on a dark ground; on a computer (823 px) the line's x-height is 11 px and the label's capitals 17 px. The line is decorative on a phone, as a card's is at 320 px: the alt text carries it. `tools/check.py` holds every banner to those floors and to the middle.
 
 A banner row (`readme_banners.repos` in `pack.json`) takes the label, the line and the motif of the repository's card and adds only the line's break into one or two lines; a repository with no card yet carries its own, and they move to its card row the day it gets one. Each file carries brand's SVG metadata block (title, description, rights, the master's address here as its identifier), written by the exporter from its record.
 
-**Into a repository**: a byte copy, at `.github/readme/banner-dark.svg` and `banner-light.svg` with a `SHA256SUMS` beside them, so a private repository, a clone and a fork all show it. `tools/sync_readme_banners.py` (standard library only) writes them and the README's block, right above the first level-1 heading, which stays:
+**Into a repository**: no copy. Every README reads its two files straight from this repository's `main`, by their absolute raw address, so a banner changed here shows in every README at once, private repositories included:
 
-```sh
-python3 tools/sync_readme_banners.py --write ../boards                 # the copies, SHA256SUMS and the README's block
-python3 tools/sync_readme_banners.py --check ../boards ../brand ...    # exit 1 on a stale or missing copy or block
+```html
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-light.svg">
+  <img src="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-light.svg" width="100%" alt="Kleidos Boards: Drawings, measurements, schematics and 3D models of the boards Kleidos runs on.">
+</picture>
 ```
 
-The row is found from the clone's `origin` address, or given with `--repo NAME`. A `linked` row (the firmware, while its tree is being restructured) gets the block with this repository's public addresses and no copy. Each repository with CI checks its copy with `shasum -a 256 -c .github/readme/SHA256SUMS`; a copy changes only here, then `--write` again.
+GitHub serves those files as `image/svg+xml` and shows them without its image proxy. The block stands between two markers right above the README's first level-1 heading, which stays the page's title. `tools/sync_readme_banners.py` (standard library only) prints it and checks it, and never writes a clone; a README changes in its own repository, by its own commit:
+
+```sh
+python3 tools/sync_readme_banners.py --print boards                   # the block to paste
+python3 tools/sync_readme_banners.py --check ../boards ../brand ...    # exit 1 on a missing or stale block, or a leftover .github/readme/ copy
+```
+
+**A public contract.** The paths `svg/readme/<repo>/banner-dark.svg` and `banner-light.svg` (`.github` is `dot-github`) on `main` are read by other repositories: never rename, move or delete one without changing every README that reads it first. `readme_banners.consumers` in `pack.json` lists each of those READMEs (the firmware's is `jmrplens/kleidos`), and `tools/check.py` fails when a file a consumer reads is missing, when a consumer names no banner, or when a banner has no reader. A clone's row is found from its `origin` through that list, or given with `--repo NAME`.
+
+**Caches.** `raw.githubusercontent.com` answers with `Cache-Control: max-age=300`, and GitHub and the browser keep a picture about five minutes; a README may show the old banner that long after a merge here. To force a fresh read, append `?v=N` to the three addresses in that README (raise N each time); the check accepts it.
 
 ### Previews
 
