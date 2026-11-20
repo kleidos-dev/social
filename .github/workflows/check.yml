@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: MIT
-name: check
+#
+# The repository's gate on every push and pull request: one job, its steps
+# cheapest first (the project's CI convention), so the licences, the tree's
+# rules and the static check of the pictures fail in seconds, before the
+# browser is installed and the tests and the redrawn pictures run.
+name: CI
 
 on:
   push:
@@ -10,8 +15,13 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
+    name: "🧪 Tree checks, tests and pictures"
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # The identity patterns of the metadata deny-list stay out of the tree:
@@ -34,14 +44,14 @@ jobs:
             brand/requirements.txt
       - name: Install the pinned stack
         run: pip install -r requirements.txt
-      - name: Install the browser the pictures are drawn with
-        run: python -m playwright install --with-deps chromium
       - name: Licenses (REUSE)
         run: reuse lint
       - name: The tree's rules
         run: python tools/check.py
       - name: Every picture is what its sources give (no browser)
         run: python tools/export.py --check --static
+      - name: Install the browser the pictures are drawn with
+        run: python -m playwright install --with-deps chromium
       - name: Tests
         run: python -m pytest -rs tests
       # Exact pixels are the exporting machine's to compare: this runner's

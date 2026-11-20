@@ -15,7 +15,7 @@
 # comment workflow a read-only token on their runs. The comment on the
 # pull request is posted by commit-check-comment.yml, which reads that
 # artifact and never runs code from the pull request.
-name: commit-check
+name: Commit check
 
 on:
   pull_request:
@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   commit-messages:
-    name: commit messages
+    name: "✍️ Commit messages"
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

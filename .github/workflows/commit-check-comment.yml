@@ -11,13 +11,13 @@
 # artifact as data (validated, every string escaped), and acts only when
 # that pull request's head is still the commit the check ran on. It never
 # checks out or runs code from the pull request.
-name: commit-check comment
+name: Commit check comment
 
 # Reviewed: workflow_run is what lets a fork's pull request get a comment,
 # and this job treats the artifact as data only (see above).
 on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
-    workflows: [commit-check]
+    workflows: [Commit check]
     types: [completed]
 
 permissions: {}
@@ -28,7 +28,7 @@ concurrency:
 
 jobs:
   comment:
-    name: commit-check comment
+    name: "🙋 Post the commit-check comment"
     if: github.event.workflow_run.event == 'pull_request' && (github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.conclusion == 'failure')
     runs-on: ubuntu-latest
     timeout-minutes: 5
