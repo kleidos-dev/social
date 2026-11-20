@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 #
 # The repository's gate on every push and pull request: one job, its steps
-# cheapest first (the project's CI convention), so the licences, the tree's
+# cheapest first (the project's CI convention), so the licenses, the tree's
 # rules and the static check of the pictures fail in seconds, before the
 # browser is installed and the tests and the redrawn pictures run.
 name: CI
