@@ -22,9 +22,10 @@ What it holds:
 - cards:    one template; each motif in the motifs' line language, inside its box and standing on
             the shelf; the words inside their column; the line still readable at 400 px, title and mark at 320;
 - banners:  one template; each README banner's words inside their column and its motif on the shelf;
-            the mark and the title's capitals readable at 279 px, the line and the label at 823; the
-            light file is the dark file plus its ground; each file is what its row gives, byte for byte,
-            under the rule's weight;
+            the text block and the motif's box centred on the middle; the mark readable at 279 px,
+            the line and the label at 823; the light file is the dark file plus its ground; each file
+            is what its row gives, byte for byte, under the rule's weight; every file a README listed
+            under readme_banners.consumers reads by its address is here, and every banner has a reader;
 - brand:    TRADEMARKS.md is brand's, byte for byte; the submodule's address is brand's public
             one, https://github.com/kleidos-dev/brand.git;
 - licenses: every declaration is GPL-3.0-or-later (the artwork and the pack's data) or MIT (the
@@ -84,6 +85,7 @@ def sources(root: Path) -> list[Path]:
 def pack_findings(root: Path, data: dict[str, Any]) -> list[str]:
     found = cards.row_findings(data)
     found += readme_banners.row_findings(data)
+    found += readme_banners.consumer_findings(root, data)
     listed: dict[str, str] = {}
     for image in pack.images(data):
         if not (root / image.source).is_file():

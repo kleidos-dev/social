@@ -1,32 +1,37 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Copy a repository's README banner into its clone, or check that the copy there is current.
+"""Check that a repository's README shows its banner straight from social, or print the block it needs.
 
-    tools/sync_readme_banners.py --write REPO              copy that repository's two banners into
-                                                           REPO/.github/readme/, write SHA256SUMS beside
-                                                           them, and put the banner's block at the top of
-                                                           REPO/README.md
-    tools/sync_readme_banners.py --check REPO [REPO ...]   exit 1 when a copy, its SHA256SUMS or the
-                                                           README's block is stale or missing
+    tools/sync_readme_banners.py --check REPO [REPO ...]   exit 1 when a clone's README has no banner block,
+                                                           a block with other addresses or another alt text,
+                                                           or still keeps a copy of the banner
+    tools/sync_readme_banners.py --print NAME              print the block for the banner row NAME, to paste
+                                                           above the README's first level-1 heading
     --repo NAME                                            the row to use, for a clone whose origin does
                                                            not name it (one REPO only)
 
-The banners are drawn here (``tools/export.py``, rows under ``readme_banners``
-in ``pack.json``) and land in each repository as byte copies, so a private
-repository, a clone and a fork all show them. The README's block stands
-between two generated markers, right above the first level-1 heading, which
-stays the page's title. A row whose mode is ``linked`` gets the block with
-this repository's public addresses and no file; social's own README is
-written by the exporter (mode ``self``).
+The banners are drawn here (``tools/export.py``, rows under
+``readme_banners`` in ``pack.json``) and no repository keeps a copy: every
+README reads the two files by their absolute address on this repository's
+``main`` (``RAW``), so a change made here shows in every README at once,
+private repositories included, as soon as GitHub's caches let it (about five
+minutes; ``?v=N`` after an address forces a fresh read and is accepted
+here). Those paths are a public contract: ``readme_banners.consumers`` in
+``pack.json`` lists every README that reads them, and ``tools/check.py``
+fails when a file one of them needs is missing.
+
+The README's block stands between two markers, right above the first
+level-1 heading, which stays the page's title. This tool never writes a
+clone: a README changes in its own repository, by its own commit. Social's
+own README is written by the exporter, with relative paths.
 
 Standard library only: it runs with no virtual environment and no submodule.
-The row is found from the clone's ``origin`` address (``.../boards.git`` is
-``boards``).
+A clone's row is found from its ``origin`` address through the consumers
+(``jmrplens/kleidos`` reads ``kleidos``).
 """
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import subprocess
@@ -37,13 +42,17 @@ from typing import Any
 #: This repository: the masters and pack.json are read from it.
 SOCIAL = Path(__file__).resolve().parents[1]
 OWNER = "kleidos-dev"
-#: Where a linked README reads the masters from: this repository is public.
-RAW = f"https://github.com/{OWNER}/social/raw/main/"
+#: Where every README reads the masters from: this repository is public, and its main branch is the contract.
+RAW = f"https://raw.githubusercontent.com/{OWNER}/social/main/"
 THEMES = ("dark", "light")
 BEGIN = "<!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit by hand -->"
 END = "<!-- END GENERATED: banner -->"
-SUMS = "SHA256SUMS"
-MODES = ("copy", "linked", "self")
+#: A row's mode: ``raw`` (its README reads this repository's files by address) or ``self`` (social's own README).
+MODES = ("raw", "self")
+#: Where a repository used to keep its copy; a clone that still has one is told to remove it.
+OLD_COPY = ".github/readme"
+#: The cache-busting query a README may add to an address.
+VERSION = re.compile(r"\?v=\d+(?=\")")
 HEADING = re.compile(r"^# \S")
 FENCE = re.compile(r"^(```|~~~)")
 
@@ -66,7 +75,7 @@ def rows(data: dict[str, Any]) -> list[dict[str, Any]]:
         card = cards.get(entry["repo"], {})
         merged = {key: entry.get(key, card.get(key)) for key in ("label", "line", "motif")}
         out.append({"repo": entry["repo"], "name": name_of(entry["repo"]), "lines": list(entry["lines"]),
-                    "mode": entry.get("mode", "copy"), "card": bool(card), **merged})
+                    "mode": entry.get("mode", "raw"), "card": bool(card), **merged})
     return out
 
 
@@ -78,14 +87,14 @@ def row(data: dict[str, Any], repo: str) -> dict[str, Any]:
     raise ValueError(f"pack.json has no README banner for the repository {repo!r}")
 
 
+def consumers(data: dict[str, Any]) -> list[dict[str, str]]:
+    """Return every README that reads a banner from here: its repository (``owner/name``) and the banner row it shows."""
+    return list(data["readme_banners"].get("consumers", []))
+
+
 def master(data: dict[str, Any], entry: dict[str, Any], theme: str) -> str:
     """Return the path, in this repository, of a row's banner for *theme*."""
     return f"{data['readme_banners']['out']}/{entry['name']}/banner-{theme}.svg"
-
-
-def copy_path(data: dict[str, Any], theme: str) -> str:
-    """Return where a banner's copy lands in its repository."""
-    return f"{data['readme_banners']['dest']}/banner-{theme}.svg"
 
 
 def alt(entry: dict[str, Any]) -> str:
@@ -109,15 +118,19 @@ def picture(entry: dict[str, Any], sources: dict[str, str]) -> str:
 
 
 def sources_for(data: dict[str, Any], entry: dict[str, Any]) -> dict[str, str]:
-    """Return the addresses a repository's README reads its banner from."""
-    if entry["mode"] == "linked":
-        return {theme: RAW + master(data, entry, theme) for theme in THEMES}
-    return {theme: copy_path(data, theme) for theme in THEMES}
+    """Return the absolute addresses a repository's README reads its banner from."""
+    return {theme: RAW + master(data, entry, theme) for theme in THEMES}
 
 
 def block(data: dict[str, Any], entry: dict[str, Any]) -> str:
-    """Return the whole generated block of a repository's README, markers included."""
+    """Return the whole block of a repository's README, markers included."""
     return f"{BEGIN}\n\n{picture(entry, sources_for(data, entry))}\n\n{END}"
+
+
+def current_block(text: str) -> str | None:
+    """Return the README's banner block, markers included, or None when it has none."""
+    found = re.search(re.escape(BEGIN) + r".*?" + re.escape(END), text, re.S)
+    return found.group(0) if found else None
 
 
 def with_block(text: str, generated: str) -> str:
@@ -138,64 +151,35 @@ def with_block(text: str, generated: str) -> str:
     raise ValueError("README.md has no level-1 heading to put the banner above, and no banner block")
 
 
-def digest(data: bytes) -> str:
-    """Return the SHA-256 of *data*, in hexadecimal."""
-    return hashlib.sha256(data).hexdigest()
-
-
-def expected(data: dict[str, Any], entry: dict[str, Any], social: Path = SOCIAL) -> dict[str, bytes]:
-    """Return the files a repository's banner gives it (README excepted), by path in that repository."""
-    if entry["mode"] != "copy":
-        return {}
-    files = {copy_path(data, theme): (social / master(data, entry, theme)).read_bytes() for theme in THEMES}
-    sums = "".join(f"{digest(body)}  {path}\n" for path, body in files.items())
-    files[f"{data['readme_banners']['dest']}/{SUMS}"] = sums.encode()
-    return files
-
-
-def origin_name(clone: Path) -> str:
-    """Return the repository a clone's ``origin`` names: ``.../boards.git`` is ``boards``."""
+def origin_of(clone: Path) -> str:
+    """Return the repository a clone's ``origin`` names, as ``owner/name``: ``.../kleidos-dev/boards.git`` is ``kleidos-dev/boards``."""
     try:
         url = subprocess.run(["git", "-C", str(clone), "config", "--get", "remote.origin.url"],
                              capture_output=True, text=True, check=True).stdout.strip()
     except (OSError, subprocess.CalledProcessError) as error:
         raise ValueError(f"{clone}: no origin to read the repository's name from; pass --repo NAME") from error
-    name = re.sub(r"\.git$", "", url.rstrip("/")).rsplit("/", 1)[-1].rsplit(":", 1)[-1]
-    if not name:
+    found = re.search(r"[:/]([^/:]+)/([^/]+?)(?:\.git)?/?$", url)
+    if not found:
         raise ValueError(f"{clone}: cannot read a repository's name from {url!r}; pass --repo NAME")
-    return name
+    return f"{found.group(1)}/{found.group(2)}"
 
 
 def resolve(data: dict[str, Any], clone: Path, repo: str | None) -> dict[str, Any]:
-    """Return the row of the repository at *clone*."""
-    entry = row(data, repo or origin_name(clone))
+    """Return the banner row the README of the clone at *clone* shows."""
+    if repo is None:
+        origin = origin_of(clone)
+        named = [consumer["banner"] for consumer in consumers(data) if consumer["repository"].lower() == origin.lower()]
+        if not named:
+            raise ValueError(f"{origin}: not a consumer in pack.json (readme_banners.consumers); add it there first")
+        repo = named[0]
+    entry = row(data, repo)
     if entry["mode"] == "self":
-        raise ValueError(f"{entry['repo']}: its README's banner is written by tools/export.py, not by this tool")
+        raise ValueError(f"{entry['repo']}: its README's banner is written by tools/export.py, not checked by this tool")
     return entry
 
 
-def write(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> list[str]:
-    """Bring the banner of the repository at *clone* up to date, and return what was written."""
-    data = load_pack(social)
-    entry = resolve(data, clone, repo)
-    written = []
-    for path, body in expected(data, entry, social).items():
-        target = clone / path
-        if not target.is_file() or target.read_bytes() != body:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(body)
-            written.append(path)
-    readme = clone / "README.md"
-    text = readme.read_text(encoding="utf-8")
-    updated = with_block(text, block(data, entry))
-    if updated != text:
-        readme.write_text(updated, encoding="utf-8")
-        written.append("README.md")
-    return written
-
-
 def findings(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> list[str]:
-    """Return how the banner of the repository at *clone* differs from what social gives it."""
+    """Return how the README of the clone at *clone* differs from the block social gives it."""
     data = load_pack(social)
     try:
         entry = resolve(data, clone, repo)
@@ -203,45 +187,38 @@ def findings(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> lis
         return [str(error)]
     where = entry["repo"]
     found = []
-    for path, body in expected(data, entry, social).items():
-        target = clone / path
-        if not target.is_file():
-            found.append(f"{where}: {path} is missing; run tools/sync_readme_banners.py --write")
-        elif target.read_bytes() != body:
-            found.append(f"{where}: {path} is not social's; run tools/sync_readme_banners.py --write")
-    if entry["mode"] == "linked":
-        stray = [path for path in (copy_path(data, theme) for theme in THEMES) if (clone / path).exists()]
-        found += [f"{where}: {path} exists, and a linked banner has no copy" for path in stray]
+    if (clone / OLD_COPY).exists():
+        found.append(f"{where}: {OLD_COPY}/ still holds a copy; README banners are read from social, so remove it")
     readme = clone / "README.md"
     if not readme.is_file():
         return [*found, f"{where}: README.md is missing"]
     text = readme.read_text(encoding="utf-8")
-    try:
-        current = with_block(text, block(data, entry)) == text
-    except ValueError as error:
-        current = False
-        found.append(f"{where}: README.md: {error}")
-    if not current and BEGIN in text:
-        found.append(f"{where}: README.md: its banner block is not the one social gives; run tools/sync_readme_banners.py --write")
-    elif not current and BEGIN not in text:
-        found.append(f"{where}: README.md has no banner block; run tools/sync_readme_banners.py --write")
+    present = current_block(text)
+    if present is None:
+        try:
+            with_block(text, "")
+        except ValueError as error:
+            return [*found, f"{where}: README.md: {error}"]
+        return [*found, f"{where}: README.md has no banner block; paste the output of tools/sync_readme_banners.py --print {where}"]
+    if VERSION.sub("", present) != block(data, entry):
+        found.append(f"{where}: README.md: its banner block is not the one social gives (addresses or alt text);"
+                     f" paste the output of tools/sync_readme_banners.py --print {where}")
     return found
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=(__doc__ or "").split("\n\n")[0])
     mode = parser.add_mutually_exclusive_group(required=True)
-    mode.add_argument("--write", metavar="REPO", type=Path, help="copy the banner into the clone at REPO")
-    mode.add_argument("--check", metavar="REPO", type=Path, nargs="+", help="check the clones at REPO ...")
+    mode.add_argument("--check", metavar="REPO", type=Path, nargs="+", help="check the README of the clones at REPO ...")
+    mode.add_argument("--print", metavar="NAME", dest="show", help="print the block of the banner row NAME")
     parser.add_argument("--repo", help="the row to use, when a clone's origin does not name it")
     args = parser.parse_args(argv)
-    if args.write is not None:
+    if args.show is not None:
         try:
-            written = write(args.write.resolve(), args.repo)
-        except (ValueError, OSError) as error:
+            print(block(load_pack(), row(load_pack(), args.show)))
+        except ValueError as error:
             print(error)
             return 1
-        print("\n".join(f"wrote {path}" for path in written) or "already current")
         return 0
     if args.repo and len(args.check) > 1:
         parser.error("--repo names the row of one clone")
@@ -251,7 +228,7 @@ def main(argv: list[str] | None = None) -> int:
     if found:
         print(f"\n{len(found)} finding(s).")
         return 1
-    print(f"banners: {len(args.check)} clone(s) current.")
+    print(f"banners: {len(args.check)} README(s) current.")
     return 0
 
 

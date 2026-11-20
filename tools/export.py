@@ -244,17 +244,19 @@ def blocks(collected: Collected, files: dict[str, Any]) -> dict[str, str]:
     for entry in data["not_made"]:
         not_made.append(f"| {entry['platform']} | {entry['asset']} | {entry['why']} |")
 
-    banner_rows = ["| Repository | Dark theme | Light theme | Label | Line | Motif | In its README |", "| --- | --- | --- | --- | --- | --- | --- |"]
+    banner_rows = ["| Repository | Dark theme | Light theme | Label | Line | Motif | Read by the README of |", "| --- | --- | --- | --- | --- | --- | --- |"]
     by_row: dict[str, dict[str, Picture]] = {}
     for picture in collected.pictures:
         if picture.kind == "banner":
             by_row.setdefault(picture.path.parent.name, {})[picture.path.stem.removeprefix("banner-")] = picture
-    where = {"copy": "a copy in `.github/readme/`", "linked": "linked from here", "self": "read from here"}
+    readers: dict[str, list[str]] = {}
+    for consumer in sync_readme_banners.consumers(data):
+        readers.setdefault(consumer["banner"], []).append(f"`{consumer['repository']}`")
     for row in readme_banners.rows(data):
         files_of = by_row.get(row.name, {})
         cells = [f"[{weight(files_of[theme].path)}]({files_of[theme].path})" if theme in files_of else "not built" for theme in sync_readme_banners.THEMES]
         banner_rows.append(f"| `{data['cards']['owner']}/{row.repo}` | {cells[0]} | {cells[1]} | {row.label.upper()} | {row.line} |"
-                           f" [`{row.motif}`]({cards.motif_path(data, row.motif)}) | {where[row.mode]} |")
+                           f" [`{row.motif}`]({cards.motif_path(data, row.motif)}) | {'this one, by path' if row.mode == 'self' else ', '.join(readers.get(row.repo, ['none']))} |")
 
     preview_rows = ["| File | What it shows |", "| --- | --- |"]
     for spec in data["previews"]:
